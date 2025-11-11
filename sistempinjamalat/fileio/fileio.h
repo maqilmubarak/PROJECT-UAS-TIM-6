@@ -52,4 +52,11 @@ void saveLoans();
 Item* find_item_by_id(uint32_t id);
 uint32_t next_item_id();
 
+// save and load loans Fuction
+void loadLoans();
+void saveLoans();
+void findLoansIndex(const char * username, unsigned int id_alat);
+void addOrUpdateLoans(const char * username, unsigned int id_alat, int model);
+void adminListLoans();
+
 #endif
