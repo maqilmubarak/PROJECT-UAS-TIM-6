@@ -69,7 +69,7 @@ void loadAccounts(){
 }
 
 void saveAccounts(){
-    FILE *fp = fopen("./data/account.txt", "w");
+    FILE *fp = fopen("./data/account.txt"      lm, "w");
     if(fp == NULL) { return; }
     for(int i = 0; i < countAccount; i++){
         fprintf(fp, "%s|%s|%s\n", accounts[i].username, accounts[i].password, accounts[i].role);
