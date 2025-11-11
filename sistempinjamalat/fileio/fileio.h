@@ -45,8 +45,11 @@ void saveAccounts();
 void loadItems();
 void saveItems();
 
-void load_loans();
-void save_loans();
+void loadLoans();
+void saveLoans();
 
+// Finding and CRUD Function
+Item* find_item_by_id(uint32_t id);
+uint32_t next_item_id();
 
 #endif

@@ -7,10 +7,10 @@ Account accounts[MAX_ACCOUNTS];
 int countAccount = 0;
 
 Item items[MAX_ITEMS];
-int item_count = 0;
+int countItem = 0;
 
 Loan loans[MAX_LOANS];
-int loan_count = 0;
+int countLoan = 0;
 
 void trimNewline(char * s){
     size_t lenght = strlen(s);
@@ -59,6 +59,10 @@ void loadAccounts(){
         strncpy(accounts[countAccount].role, passwdSeparator + 1, sizeof(accounts[0].role) - 1);
         countAccount++;
 
+        accounts[countAccount].username[sizeof(accounts[0].username) - 1] = '\0';
+        accounts[countAccount].password[sizeof(accounts[0].password) - 1] = '\0';
+        accounts[countAccount].role[sizeof(accounts[0].role) - 1] = '\0';
+
         if(countAccount >= MAX_ACCOUNTS){ break; }
     }
     fclose(fp);
@@ -71,4 +75,41 @@ void saveAccounts(){
         fprintf(fp, "%s|%s|%s\n", accounts[i].username, accounts[i].password, accounts[i].role);
     }
     fclose(fp);
+}
+
+
+
+
+
+
+
+
+
+
+
+/* Functions For Items */
+void loadItems(){
+    
+}
+
+void saveItems(){
+
+}
+
+
+Item * findItemById(uint32_t id){
+    for(int i = 0; i < countItem; i++){
+        if(items[i].idAlat == id);
+        return &items[i];
+    }
+}
+
+uint32_t nextItemId() {
+    uint32_t max = 0;
+    for (int i = 0; i < countItem; i++){
+        if (items[i].idAlat > max){
+            max = items[i].idAlat;
+        } 
+        return max + 1;
+    } 
 }
