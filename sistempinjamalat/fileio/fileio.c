@@ -77,20 +77,67 @@ void saveAccounts(){
     fclose(fp);
 }
 
-
-
-
-
-
-
-
-
-
-
 /* Functions For Items */
 void loadItems(){
-    
+    FILE *fp = NULL;
+    char line[1024];
+    char* parts[6];
+    int partCount = 0;
+    char* separator = NULL;
+
+    countItem = 0;
+    FILE *fp = fopen("./data/items.txt", "r");
+    if(!fp) {
+        fp = fopen("./data/items.txt", "w");
+        if (fp) {
+            fclose(fp); 
+        }
+        return;
+    }
+    while(fgets(line, sizeof(line), fp)) {
+        trimNewline(line);
+        
+        if(strlen(line) == 0) {
+            continue;
+        }
+        if(countItem >= MAX_ITEMS) {
+            break;
+        }
+        partCount = 0;
+        parts[0] = line;
+        separator = line;
+
+        while(partCount < 5 && (separator == strchr(separator, '|')) != NULL) {
+            *separator = '\0';
+            partCount++;
+            parts[partCount] = separator + 1;
+        }
+        if (partCount != 5) {
+            continue;
+        }
+        // Mengkonversi string ke unsigned integer (uint32_t)
+        items[countItem].idAlat = (uint32_t)strtoul(parts[0], NULL, 10);
+
+        // Menyalin data string
+        strncpy(items[countItem].name, parts[1], sizeof(items[0].name)-1);
+        strncpy(items[countItem].merek, parts[2], sizeof(items[0].merek) - 1);
+        strncpy(items[countItem].model, parts[3], sizeof(items[0].model) - 1);
+
+        // Konversi data numerik
+        items[countItem].productionYear = (uint32_t)strtoul(parts[4], NULL, 10);
+        items[countItem].quantity = (uint32_t)strtoul(parts[5], NULL, 10);
+
+        // Cek string akhiran NULL
+        items[countItem].name[sizeof(items[0].name) - 1] = '\0';
+        items[countItem].merek[sizeof(items[0].merek) - 1] = '\0';
+        items[countItem].model[sizeof(items[0].model) - 1] = '\0';
+        
+        countItem++;
+    }
+    fclose(fp);
 }
+
+
 
 void saveItems(){
 
