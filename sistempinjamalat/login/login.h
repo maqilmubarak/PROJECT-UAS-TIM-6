@@ -3,8 +3,8 @@
 #include "fileio.h"
 
 Account* find_account(const char* username);
+Account* authenticate_cli();
 
-int authenticate_cli(const char* username);
 int add_account(const char* user, const char* pass);
 
 #endif
