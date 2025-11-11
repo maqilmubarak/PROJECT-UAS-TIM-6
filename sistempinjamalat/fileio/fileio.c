@@ -140,7 +140,18 @@ void loadItems(){
 
 
 void saveItems(){
+    int i;
 
+    FILE *fp = fopen("./data/items.txt", "w");
+    if(fp == NULL) {
+        return;
+    }
+    for (i = 0; i < countItem; i++) {
+        fprintf(fp, "%u|%s|%s|%s|%u\n",
+                items[i].idAlat, items[i].name, items[i].merek,
+                items[i].model, items[i].productionYear, items[i].quantity);
+    }
+    fclose(fp);
 }
 
 
