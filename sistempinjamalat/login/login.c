@@ -1,6 +1,9 @@
 #include <stdio.h>
 #include <string.h>
 #include "login.h"
+#include "fileio.h"
+#include "adminfunction.h"
+#include "userfunction.h"
 
 int login (char *username, char *password) {
     int i;
