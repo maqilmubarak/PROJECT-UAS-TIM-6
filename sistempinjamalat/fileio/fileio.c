@@ -1,4 +1,4 @@
-#include "./fileio/fileio.h"
+#include "fileio.h"
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -28,34 +28,35 @@ void trimNewline(char * s){
 /* Functions For Accounts Handling */
 void loadAccounts(){
     countAccount = 0;
-    FILE *fp = fopen("../data/account.txt", "r");
+    FILE *fp = fopen("./data/account.txt", "r");
     if(!fp){
-        fp = fopen("account.txt", "w");
+        fp = fopen("./data/account.txt", "w");
+        // Default credential
         fprintf(fp, "admin|admin123|admin\n");
         fclose(fp);
     }
 
-    fp = fopen("../data/account.txt", "r");
-    if(fp == NULL){ printf("[!] Tidak dapat membuka accounts.txt\n"); return; }
+    fp = fopen("./data/account.txt", "r");
+    if(fp == NULL){ return; }
 
     char line[256];
     while(fgets(line, sizeof(line), fp)){
         trimNewline(line);
         if(strlen(line) == 0 ) { continue; }
 
-        char * userSeparator = strchr(line, "|");
+        char * userSeparator = strchr(line, '|');
         char * passwdSeparator = NULL;
 
-        if(userSeparator != NULL){ passwdSeparator = strchr(userSeparator + 1, "|"); }
+        if(userSeparator != NULL){ passwdSeparator = strchr(userSeparator + 1, '|'); }
         if(userSeparator == NULL || passwdSeparator == NULL){ continue; }
 
         *userSeparator = '\0';
         *passwdSeparator = '\0';
 
         // copy line to account[].username and substract 1 for NULL BYTE
-        strncpy(account[countAccount].username, line, sizeof(account[0].username) - 1);
-        strncpy(account[countAccount].password, userSeparator + 1, sizeof(account[0].password) - 1);
-        strncpy(account[countAccount].role, passwdSeparator + 1, sizeof(account[0].role) - 1);
+        strncpy(accounts[countAccount].username, line, sizeof(accounts[0].username) - 1);
+        strncpy(accounts[countAccount].password, userSeparator + 1, sizeof(accounts[0].password) - 1);
+        strncpy(accounts[countAccount].role, passwdSeparator + 1, sizeof(accounts[0].role) - 1);
         countAccount++;
 
         if(countAccount >= MAX_ACCOUNTS){ break; }
@@ -64,10 +65,10 @@ void loadAccounts(){
 }
 
 void saveAccounts(){
-    FILE *fp = fopen("../data/account.txt", "w");
+    FILE *fp = fopen("./data/account.txt", "w");
     if(fp == NULL) { return; }
     for(int i = 0; i < countAccount; i++){
-        fprintf(fp, "%s|%s|%s\n", account[i].username, account[i].password, account[i].role);
+        fprintf(fp, "%s|%s|%s\n", accounts[i].username, accounts[i].password, accounts[i].role);
     }
-    fclose(f);
+    fclose(fp);
 }
