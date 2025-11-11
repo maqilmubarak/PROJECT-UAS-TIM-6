@@ -4,7 +4,7 @@
 #include <stdlib.h>
 
 Account accounts[MAX_ACCOUNTS];
-int account_count = 0;
+int countAccount = 0;
 
 Item items[MAX_ITEMS];
 int item_count = 0;
@@ -28,15 +28,15 @@ void trimNewline(char * s){
 /* Functions For Accounts Handling */
 void loadAccounts(){
     countAccount = 0;
-    FILE *fp = open("account.txt", "r");
+    FILE *fp = fopen("../data/account.txt", "r");
     if(!fp){
         fp = fopen("account.txt", "w");
-        fprintf(f, "admin|admin123|admin\n");
+        fprintf(fp, "admin|admin123|admin\n");
         fclose(fp);
     }
 
-    fp = fopen("account.txt", "r");
-    if(!fp){ printf("[!] Tidak dapat membuka accounts.txt\n"); return EXIT_FAILURE; }
+    fp = fopen("../data/account.txt", "r");
+    if(fp == NULL){ printf("[!] Tidak dapat membuka accounts.txt\n"); return; }
 
     char line[256];
     while(fgets(line, sizeof(line), fp)){
@@ -61,4 +61,13 @@ void loadAccounts(){
         if(countAccount >= MAX_ACCOUNTS){ break; }
     }
     fclose(fp);
+}
+
+void saveAccounts(){
+    FILE *fp = fopen("../data/account.txt", "w");
+    if(fp == NULL) { return; }
+    for(int i = 0; i < countAccount; i++){
+        fprintf(fp, "%s|%s|%s\n", account[i].username, account[i].password, account[i].role);
+    }
+    fclose(f);
 }

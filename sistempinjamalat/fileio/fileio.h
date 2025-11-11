@@ -26,11 +26,11 @@ typedef struct {
     char model[128];
     uint32_t productionYear;
     uint32_t quantity;
-}
+} Item;
 
 // Deklarasi Global Variabel
 extern Account accounts[MAX_ACCOUNTS];
-extern int account_count;
+extern int countAccount;
 
 extern Item items[MAX_ITEMS];
 extern int item_count;
@@ -39,11 +39,11 @@ extern Loan loans[MAX_LOANS];
 extern int loan_count;
 
 // Save and Load Function
-void load_accounts();
-void save_accounts();
+void loadAccounts();
+void saveAccounts();
 
-void load_items();
-void save_items();
+void loadItems();
+void saveItems();
 
 void load_loans();
 void save_loans();
