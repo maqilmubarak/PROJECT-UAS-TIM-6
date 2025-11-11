@@ -28,7 +28,7 @@ typedef struct {
     uint32_t quantity;
 }
 
-// Deklarasi Global variabel
+// Deklarasi Global Variabel
 extern Account accounts[MAX_ACCOUNTS];
 extern int account_count;
 
@@ -37,5 +37,17 @@ extern int item_count;
 
 extern Loan loans[MAX_LOANS];
 extern int loan_count;
+
+// Save and Load Function
+void load_accounts();
+void save_accounts();
+
+void load_items();
+void save_items();
+
+void load_loans();
+void save_loans();
+
+
 
 #endif
