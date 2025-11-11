@@ -1,4 +1,4 @@
-#include "./data/data.h"
+#include "./fileio/fileio.h"
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -22,4 +22,43 @@ void trimNewline(char * s){
             lenght--;
         } else { break; }
     }
+}
+
+
+/* Functions For Accounts Handling */
+void loadAccounts(){
+    countAccount = 0;
+    FILE *fp = open("account.txt", "r");
+    if(!fp){
+        fp = fopen("account.txt", "w");
+        fprintf(f, "admin|admin123|admin\n");
+        fclose(fp);
+    }
+
+    fp = fopen("account.txt", "r");
+    if(!fp){ printf("[!] Tidak dapat membuka accounts.txt\n"); return EXIT_FAILURE; }
+
+    char line[256];
+    while(fgets(line, sizeof(line), fp)){
+        trimNewline(line);
+        if(strlen(line) == 0 ) { continue; }
+
+        char * userSeparator = strchr(line, "|");
+        char * passwdSeparator = NULL;
+
+        if(userSeparator != NULL){ passwdSeparator = strchr(userSeparator + 1, "|"); }
+        if(userSeparator == NULL || passwdSeparator == NULL){ continue; }
+
+        *userSeparator = '\0';
+        *passwdSeparator = '\0';
+
+        // copy line to account[].username and substract 1 for NULL BYTE
+        strncpy(account[countAccount].username, line, sizeof(account[0].username) - 1);
+        strncpy(account[countAccount].password, userSeparator + 1, sizeof(account[0].password) - 1);
+        strncpy(account[countAccount].role, passwdSeparator + 1, sizeof(account[0].role) - 1);
+        countAccount++;
+
+        if(countAccount >= MAX_ACCOUNTS){ break; }
+    }
+    fclose(fp);
 }
