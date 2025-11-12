@@ -3,6 +3,6 @@
 
 #include <stdio.h>
 
-void safe_gets(char *buf, size_t n);
+void safeGets(char *buf, size_t n);
 
 #endif
