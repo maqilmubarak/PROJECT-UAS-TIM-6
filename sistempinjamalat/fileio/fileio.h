@@ -33,7 +33,7 @@ extern Account accounts[MAX_ACCOUNTS];
 extern int countAccount;
 
 extern Item items[MAX_ITEMS];
-extern int item_count;
+extern int countItem;
 
 extern Loan loans[MAX_LOANS];
 extern int loan_count;
