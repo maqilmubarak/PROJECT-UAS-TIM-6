@@ -49,8 +49,8 @@ void loadLoans();
 void saveLoans();
 
 // Finding and CRUD Function
-Item* find_item_by_id(uint32_t id);
-uint32_t next_item_id();
+Item* findItemById(uint32_t id);
+uint32_t nextItemId();
 
 // save and load loans Fuction
 void loadLoans();
