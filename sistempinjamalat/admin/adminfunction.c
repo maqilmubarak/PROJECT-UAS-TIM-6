@@ -5,6 +5,30 @@
 #include "../fileio/fileio.h"
 #include "../utils/utils.h"
 
+void adminListItems() {
+
+}
+
+void adminAddItems() {
+
+}
+
+void adminEditItems() {
+
+}
+
+void adminDeleteItems() {
+
+}
+
+void adminListLoans() {
+
+}
+
+void adminCreateAccount() {
+
+}
+
 void adminMenu(const char *username) {
     char choice[8];
 
