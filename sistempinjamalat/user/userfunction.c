@@ -1,3 +1,10 @@
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+#include "adminfunction.h"
+#include "../fileio/fileio.h"
+#include "../utils/utils.h"
+
 void userMenu(const char *username) {
     char choice[8];
     while (1) {
