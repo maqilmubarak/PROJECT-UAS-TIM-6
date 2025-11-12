@@ -5,6 +5,19 @@
 #include "../fileio/fileio.h"
 #include "../utils/utils.h"
 
+void userListAvailable() {
+
+}
+void userBorrow(username) {
+
+}
+void userListBorrowed(username) {
+
+}
+void userReturn(username) {
+    
+}
+
 void userMenu(const char *username) {
     char choice[8];
     while (1) {
@@ -18,13 +31,13 @@ void userMenu(const char *username) {
         safeGets(choice, sizeof(choice));
 
         if (strcmp(choice, "1") == 0)
-            user_list_available();
+            userListAvailable();
         else if (strcmp(choice, "2") == 0)
-            user_borrow(username);
+            userBorrow(username);
         else if (strcmp(choice, "3") == 0)
-            user_list_borrowed(username);
+            userListBorrowed(username);
         else if (strcmp(choice, "4") == 0)
-            user_return(username);
+            userReturn(username);
         else if (strcmp(choice, "5") == 0) {
             printf("Logout.\n");
             break;
