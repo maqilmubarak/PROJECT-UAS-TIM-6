@@ -10,7 +10,7 @@ Item items[MAX_ITEMS];
 int countItem = 0;
 
 Loan loans[MAX_LOANS];
-int countLoan = 0;
+int loan_count = 0;
 
 void trimNewline(char * s){
     size_t lenght = strlen(s);
@@ -79,12 +79,6 @@ void saveAccounts(){
 
 /* Functions For Items */
 void loadItems(){
-    FILE *fp = NULL;
-    char line[1024];
-    char* parts[6];
-    int partCount = 0;
-    char* separator = NULL;
-
     countItem = 0;
     FILE *fp = fopen("./data/items.txt", "r");
     if(!fp) {
@@ -94,60 +88,48 @@ void loadItems(){
         }
         return;
     }
-    while(fgets(line, sizeof(line), fp)) {
+
+    char line[1024];
+    while (fgets(line, sizeof(line), fp) && countItem < MAX_ITEMS) {
         trimNewline(line);
-        
-        if(strlen(line) == 0) {
-            continue;
-        }
-        if(countItem >= MAX_ITEMS) {
-            break;
-        }
-        partCount = 0;
-        parts[0] = line;
-        separator = line;
+        if (strlen(line) == 0) continue;
 
-        while(partCount < 5 && (separator == strchr(separator, '|')) != NULL) {
-            *separator = '\0';
-            partCount++;
-            parts[partCount] = separator + 1;
-        }
-        if (partCount != 5) {
-            continue;
-        }
-        // Mengkonversi string ke unsigned integer (uint32_t)
-        items[countItem].idAlat = (uint32_t)strtoul(parts[0], NULL, 10);
+        char *token;
+        int i = 0;
+        char *parts[6] = {0};
 
-        // Menyalin data string
-        strncpy(items[countItem].name, parts[1], sizeof(items[0].name)-1);
+        token = strtok(line, "|");
+        while (token && i < 6) {
+            parts[i++] = token;
+            token = strtok(NULL, "|");
+        }
+
+        if (i != 6) continue;  
+
+        items[countItem].idAlat = (uint32_t) strtoul(parts[0], NULL, 10);
+        strncpy(items[countItem].name,  parts[1], sizeof(items[0].name) - 1);
         strncpy(items[countItem].merek, parts[2], sizeof(items[0].merek) - 1);
         strncpy(items[countItem].model, parts[3], sizeof(items[0].model) - 1);
+        items[countItem].productionYear = (uint32_t) strtoul(parts[4], NULL, 10);
+        items[countItem].quantity = (uint32_t) strtoul(parts[5], NULL, 10);
 
-        // Konversi data numerik
-        items[countItem].productionYear = (uint32_t)strtoul(parts[4], NULL, 10);
-        items[countItem].quantity = (uint32_t)strtoul(parts[5], NULL, 10);
-
-        // Cek string akhiran NULL
         items[countItem].name[sizeof(items[0].name) - 1] = '\0';
         items[countItem].merek[sizeof(items[0].merek) - 1] = '\0';
         items[countItem].model[sizeof(items[0].model) - 1] = '\0';
-        
+
         countItem++;
     }
+
     fclose(fp);
 }
 
-
-
 void saveItems(){
-    int i;
-
     FILE *fp = fopen("./data/items.txt", "w");
-    if(fp == NULL) {
+    if(!fp) {
         return;
     }
-    for (i = 0; i < countItem; i++) {
-        fprintf(fp, "%u|%s|%s|%s|%u\n",
+    for (int i = 0; i < countItem; i++) {
+        fprintf(fp, "%u|%s|%s|%s|%u|%u\n",
                 items[i].idAlat, items[i].name, items[i].merek,
                 items[i].model, items[i].productionYear, items[i].quantity);
     }
@@ -170,4 +152,20 @@ uint32_t nextItemId() {
         } 
         return max + 1;
     } 
+}
+
+void loadLoans(){
+    FILE* file = fopen(LOAN, "r");
+    if (file == NULL){
+        loan_count = 0;
+        return;
+    }
+    while(fscanf(file, "%s %u %u",
+                loans[loan_count].username,
+                &loans[loan_count].itemId,
+                &loans[loan_count].quantity) !=EOF){
+        loan_count++;
+        if(loan_count >= MAX_LOANS) break;
+     }
+     fclose(file);
 }

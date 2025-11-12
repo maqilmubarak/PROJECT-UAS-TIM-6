@@ -33,7 +33,7 @@ extern Account accounts[MAX_ACCOUNTS];
 extern int countAccount;
 
 extern Item items[MAX_ITEMS];
-extern int item_count;
+extern int countItem;
 
 extern Loan loans[MAX_LOANS];
 extern int loan_count;
@@ -49,14 +49,14 @@ void loadLoans();
 void saveLoans();
 
 // Finding and CRUD Function
-Item* find_item_by_id(uint32_t id);
-uint32_t next_item_id();
+Item* findItemById(uint32_t id);
+uint32_t nextItemId();
 
 // save and load loans Fuction
 void loadLoans();
 void saveLoans();
-void findLoansIndex(const char * username, unsigned int id_alat);
-void addOrUpdateLoans(const char * username, unsigned int id_alat, int model);
+int findLoansIndex(const char * username, unsigned int itemId);
+int addOrUpdateLoans(const char * username, unsigned int itemId, unsigned int quantity);
 void adminListLoans();
 
 #endif
