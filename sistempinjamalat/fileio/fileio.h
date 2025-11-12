@@ -55,8 +55,8 @@ uint32_t nextItemId();
 // save and load loans Fuction
 void loadLoans();
 void saveLoans();
-void findLoansIndex(const char * username, unsigned int id_alat);
-void addOrUpdateLoans(const char * username, unsigned int id_alat, int model);
+int findLoansIndex(const char * username, unsigned int itemId);
+void addOrUpdateLoans(const char * username, unsigned int itemId, int model);
 void adminListLoans();
 
 #endif
