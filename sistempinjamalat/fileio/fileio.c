@@ -28,19 +28,19 @@ void trimNewline(char * s){
 /* Functions For Accounts Handling */
 void loadAccounts(){
     countAccount = 0;
-    FILE *fp = fopen("./data/account.txt", "r");
-    if(!fp){
-        fp = fopen("./data/account.txt", "w");
+    FILE *fptr = fopen("./data/account.txt", "r");
+    if(!fptr){
+        fptr = fopen("./data/account.txt", "w");
         // Default credential
-        fprintf(fp, "admin|admin123|admin\n");
-        fclose(fp);
+        fprintf(fptr, "admin|admin123|admin\n");
+        fclose(fptr);
     }
 
-    fp = fopen("./data/account.txt", "r");
-    if(fp == NULL){ return; }
+    fptr = fopen("./data/account.txt", "r");
+    if(fptr == NULL){ return; }
 
     char line[256];
-    while(fgets(line, sizeof(line), fp)){
+    while(fgets(line, sizeof(line), fptr)){
         trimNewline(line);
         if(strlen(line) == 0 ) { continue; }
 
@@ -65,32 +65,32 @@ void loadAccounts(){
 
         if(countAccount >= MAX_ACCOUNTS){ break; }
     }
-    fclose(fp);
+    fclose(fptr);
 }
 
 void saveAccounts(){
-    FILE *fp = fopen("./data/account.txt", "w");
-    if(fp == NULL) { return; }
+    FILE *fptr = fopen("./data/account.txt", "w");
+    if(fptr == NULL) { return; }
     for(int i = 0; i < countAccount; i++){
-        fprintf(fp, "%s|%s|%s\n", accounts[i].username, accounts[i].password, accounts[i].role);
+        fprintf(fptr, "%s|%s|%s\n", accounts[i].username, accounts[i].password, accounts[i].role);
     }
-    fclose(fp);
+    fclose(fptr);
 }
 
 /* Functions For Items */
 void loadItems(){
     countItem = 0;
-    FILE *fp = fopen("./data/items.txt", "r");
-    if(!fp) {
-        fp = fopen("./data/items.txt", "w");
-        if (fp) {
-            fclose(fp); 
+    FILE *fptr = fopen("./data/items.txt", "r");
+    if(!fptr) {
+        fptr = fopen("./data/items.txt", "w");
+        if (fptr) {
+            fclose(fptr); 
         }
         return;
     }
 
     char line[1024];
-    while (fgets(line, sizeof(line), fp) && countItem < MAX_ITEMS) {
+    while (fgets(line, sizeof(line), fptr) && countItem < MAX_ITEMS) {
         trimNewline(line);
         if (strlen(line) == 0) continue;
 
@@ -120,20 +120,25 @@ void loadItems(){
         countItem++;
     }
 
-    fclose(fp);
+    fclose(fptr);
 }
 
 void saveItems(){
-    FILE *fp = fopen("./data/items.txt", "w");
-    if(!fp) {
+    FILE *fptr = fopen("./data/items.txt", "w");
+    if(fptr == NULL) {
+        printf("[!] Gagal Menyimpan Data");
         return;
     }
     for (int i = 0; i < countItem; i++) {
-        fprintf(fp, "%u|%s|%s|%s|%u|%u\n",
+        fprintf(fptr, "%u|%s|%s|%s|%u|%u\n",
                 items[i].idAlat, items[i].name, items[i].merek,
                 items[i].model, items[i].productionYear, items[i].quantity);
     }
-    fclose(fp);
+    fclose(fptr);
+}
+
+int addItem(Item *it){
+    
 }
 
 
