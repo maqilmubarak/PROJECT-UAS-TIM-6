@@ -6,7 +6,7 @@
 #define MAX_ACCOUNTS 128
 #define MAX_ITEMS 1024
 #define MAX_LOANS 4096
-#define LOAN "./data/item.txt"
+#define LOAN "./data/loan.txt"
 
 typedef struct {
     char username[64];
