@@ -72,3 +72,18 @@ void adminMenu(const char *username) {
         }
     }
 }
+
+void adminListItem(){
+    printf("\nDAFTAR ALAT\n");
+    if(countItem == 0) {
+        printf("Alat belum tersedia.\n");
+        return;
+   }
+
+   printf("ID | NAMA | MERK | MODEL | TAHUN | JUMLAH\n");
+   for(int i = 0; i < countItem; i++) {
+    printf("%u | %s | %s | %s | %u | %u\n",
+    items[i].idAlat, items[i].name, items[i].merek, items[i].model, items[i].productionYear, items[i].quantity);
+    
+   }
+}
