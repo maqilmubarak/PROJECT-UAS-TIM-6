@@ -6,6 +6,7 @@
 #define MAX_ACCOUNTS 128
 #define MAX_ITEMS 1024
 #define MAX_LOANS 4096
+#define LOAN "./data/item.txt"
 
 typedef struct {
     char username[64];
@@ -36,7 +37,7 @@ extern Item items[MAX_ITEMS];
 extern int countItem;
 
 extern Loan loans[MAX_LOANS];
-extern int loan_count;
+extern int countLoan;
 
 // Save and Load Function
 void loadAccounts();
