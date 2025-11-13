@@ -28,15 +28,48 @@ void userListAvailable() {
 
 }
 
-void userBorrow(username) {
+void userBorrow(const char *username) {
+    char buf[64];
+
+    printf("Masukkan ID alat yang ingin dipinjam: ");
+    safeGets(buf, sizeof(buf));
+    uint32_t id = (uint32_t)atoi(buf);
+
+    Item *alat = findItemById(id);
+    if (alat == NULL) {
+        printf("ID tidak ditemukan.\n");
+        return;
+    }
+
+    printf("Jumlah tersedia: %u. Masukkan jumlah: ", alat->quantity);
+    safeGets(buf, sizeof(buf));
+    uint32_t jumlahPinjam = (uint32_t)atoi(buf);
+
+    if (jumlahPinjam == 0) {
+        printf("Jumlah harus > 0.\n");
+        return;
+    }
+    if (jumlahPinjam > alat->quantity) {
+        printf("Stok tidak mencukupi.\n");
+        return;
+    }
+
+    if (!addOrUpdateLoans(username, id, jumlahPinjam)) {
+        printf("Gagal meminjam (kapasitas loans?).\n");
+        return;
+    }
+
+    alat->quantity -= jumlahPinjam;
+    saveItems();
+
+    printf("Berhasil meminjam %u unit '%s'.\n", jumlahPinjam, alat->name);
+}
+
+void userListBorrowed() {
 
 }
 
-void userListBorrowed(username) {
-
-}
-
-void userReturn(username) {
+void userReturn() {
 
 }
 
