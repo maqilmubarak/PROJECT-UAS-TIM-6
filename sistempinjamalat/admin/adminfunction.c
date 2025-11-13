@@ -73,7 +73,7 @@ void adminMenu(const char *username) {
     }
 }
 
-void adminListItem(){
+void adminListItems(){
     printf("\nDAFTAR ALAT\n");
     if(countItem == 0) {
         printf("Alat belum tersedia.\n");
@@ -84,6 +84,6 @@ void adminListItem(){
    for(int i = 0; i < countItem; i++) {
     printf("%u | %s | %s | %s | %u | %u\n",
     items[i].idAlat, items[i].name, items[i].merek, items[i].model, items[i].productionYear, items[i].quantity);
-    
+
    }
 }
