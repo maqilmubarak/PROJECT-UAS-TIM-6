@@ -1,21 +1,43 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-#include "adminfunction.h"
+#include "userfunction.h"
 #include "../fileio/fileio.h"
 #include "../utils/utils.h"
 
 void userListAvailable() {
+    printf("\n=== DAFTAR ALAT LAB YANG TERSEDIA ===\n");
+    int found = 0;
+
+    for (int i = 0; i < countItem; i++) {
+        if (items[i].quantity > 0) {
+            printf("%d | %s | %s | %s | %d | %d\n",
+                items[i].idAlat,
+                items[i].name,
+                items[i].merek,
+                items[i].model,
+                items[i].productionYear,
+                items[i].quantity);
+            found = 1;
+        }
+    }
+
+    if (found == NULL) {
+        printf("Tidak ada alat tersedia.\n");
+    }
 
 }
+
 void userBorrow(username) {
 
 }
+
 void userListBorrowed(username) {
 
 }
+
 void userReturn(username) {
-    
+
 }
 
 void userMenu(const char *username) {
@@ -45,3 +67,5 @@ void userMenu(const char *username) {
             printf("Pilihan tidak valid.\n");
     }
 }
+
+
