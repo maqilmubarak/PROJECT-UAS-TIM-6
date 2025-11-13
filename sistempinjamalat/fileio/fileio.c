@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <stdbool.h>
 
 Account accounts[MAX_ACCOUNTS];
 int countAccount = 0;
@@ -137,8 +138,12 @@ void saveItems(){
     fclose(fptr);
 }
 
-int addItem(Item *it){
-    
+int addItem(Item *newItem){
+    if(countItem >= MAX_ITEMS){ return false;}
+    items[countItem] = *newItem;
+    countItem++;
+    saveItems();
+    return true;
 }
 
 
