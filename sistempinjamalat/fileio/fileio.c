@@ -157,15 +157,15 @@ uint32_t nextItemId() {
 void loadLoans(){
     FILE* file = fopen(LOAN, "r");
     if (file == NULL){
-        loan_count = 0;
+        countLoan = 0;
         return;
     }
     while(fscanf(file, "%s %u %u",
-                loans[loan_count].username,
-                &loans[loan_count].itemId,
-                &loans[loan_count].quantity) !=EOF){
-        loan_count++;
-        if(loan_count >= MAX_LOANS) break;
+                loans[countLoan].username,
+                &loans[countLoan].itemId,
+                &loans[countLoan].quantity) !=EOF){
+        countLoan++;
+        if(countLoan >= MAX_LOANS) break;
      }
      fclose(file);
 }
