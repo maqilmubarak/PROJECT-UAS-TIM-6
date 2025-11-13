@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <string.h>
-#include "..\login\login.h"
+#include "login.h"
 
 Account* findAccount(const char* username) {
     for(int i = 0; i < countAccount; i++) {
