@@ -193,3 +193,19 @@ int findLoansIndex(const char *username, unsigned int itemId){
     }
     return -1;
 } 
+
+int addOrUpdateLoans(const char *username, unsigned int itemId, unsigned int quantity){
+    loadLoans();
+    int index = findLoansIndex(username, itemId);
+    if (index >= 0){
+        loans[index].quantity += quantity;
+    }else if(countLoan < MAX_LOANS){
+        strcpy(loans[countLoan].username, username);
+        loans[countLoan].itemId = itemId;
+        loans[countLoan].quantity = quantity;
+        countLoan++;
+    }else {
+        printf("Error: Data pinjaman penuh.\n");
+    }
+    saveLoans();
+}
