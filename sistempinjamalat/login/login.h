@@ -1,10 +1,10 @@
 #ifndef LOGIN_H
 #define LOGIN_H
-#include "fileio.h"
+#include "..\fileio\fileio.h"
 
-Account* find_account(const char* username);
-Account* authenticate_cli();
+Account* findAccount(const char* username);
+Account* authenticateCli();
 
-int add_account(const char* user, const char* pass);
+int addAccount(const char* user, const char* pass, const char* role);
 
 #endif

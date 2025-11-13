@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <string.h>
-#include "login.h"
+#include "..\login\login.h"
 
-Account* find_account(const char* username) {
+Account* findAccount(const char* username) {
     for(int i = 0; i < countAccount; i++) {
         if (strcmp(username, accounts[i].username) == 0) {
             return &accounts[i];
@@ -11,12 +11,12 @@ Account* find_account(const char* username) {
     return NULL;
 }
 
-Account* authenticate_cli() {
+Account* authenticateCli() {
     char username[64];
     char password[64];
     Account* foundAccount = NULL;
 
-    printf("=== Login ===");
+    printf("=== Login ===\n");
     printf("Username: ");
 
     if(!fgets(username, sizeof(username), stdin)) {
@@ -30,7 +30,7 @@ Account* authenticate_cli() {
     }
     trimNewline(password);
 
-    foundAccount = find_account(username);
+    foundAccount = findAccount(username);
 
     if(foundAccount != NULL) {
         if (strcmp(password, foundAccount->password) == 0) {
@@ -41,3 +41,8 @@ Account* authenticate_cli() {
     printf("\nLogin Gagal! Username atau passowrd salah.\n");
     return NULL;
 }
+
+int addAccount(const char* user, const char* pass, const char* role) {
+
+}
+
