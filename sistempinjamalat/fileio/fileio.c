@@ -184,3 +184,12 @@ void saveLoans(){
     }
     fclose(file);
 }
+
+int findLoansIndex(const char *username, unsigned int itemId){
+    for(int i = 0; i < countLoan; i++){
+        if(strcmp(loans[i].username, username) == 0 && loans[i].itemId == itemId){
+            return i;
+        }
+    }
+    return -1;
+} 
