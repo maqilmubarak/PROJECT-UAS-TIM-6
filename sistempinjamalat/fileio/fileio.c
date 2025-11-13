@@ -10,7 +10,7 @@ Item items[MAX_ITEMS];
 int countItem = 0;
 
 Loan loans[MAX_LOANS];
-int loan_count = 0;
+int countLoan = 0;
 
 void trimNewline(char * s){
     size_t lenght = strlen(s);
@@ -168,4 +168,19 @@ void loadLoans(){
         if(countLoan >= MAX_LOANS) break;
      }
      fclose(file);
+}
+
+void saveLoans(){
+    FILE *file = fopen(LOAN, "w");
+    if (file == NULL){
+        printf("Error tidak dapat menyimpan file %s\n", LOAN);
+        return;
+    }
+    for (int i = 0; i < countLoan; i++){
+        fprintf(file, "%s %u %u\n",
+                loans[i].username,
+                loans[i].itemId,
+                loans[i].quantity);
+    }
+    fclose(file);
 }
