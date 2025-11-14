@@ -24,7 +24,7 @@ void adminAddItems() {
     Item it;
     char buf[256];
 
-    it.idAlat = next_item_id();
+    it.idAlat = nextItemId();
 
     printf("Nama alat: ");
     safeGets(buf, sizeof(buf));
