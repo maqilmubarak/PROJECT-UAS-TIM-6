@@ -2,7 +2,7 @@
 #include <string.h>
 #include "utils.h"
 
-void safe_gets(char *buf, size_t n) {
+void safeGets(char *buf, size_t n) {
     if (fgets(buf, n, stdin)) {
         size_t len = strlen(buf);
 
