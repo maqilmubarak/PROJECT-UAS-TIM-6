@@ -12,7 +12,7 @@ int main(int argc, char *argv[]){
     loadItems();
     loadLoans();
 
-    Account *acc = authenticateCli();
+    Account *acc = authenticateCli(argc, argv);
     if(acc == NULL){return EXIT_FAILURE;}
 
     printf("Login Berhasil\n");
