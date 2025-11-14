@@ -32,8 +32,21 @@ void adminDeleteItems() {
 
 }
 
-void adminListLoans() {
+void adminListLoans(){
+    loadLoans();
+    printf("=== Daftar semua peminjaman alat ===\n");
+    printf("============================================================\n");
+    printf("| %-15s | %-8s | %-8s | \n","Username","ID Alat", "jumlah\n");
+    printf("=============================================================\n");
 
+    if (countLoan == 0){
+        printf("| Tidak ada data peminjaman.                            |\n");
+    }else{
+        for(int i = 0; i < countLoan; i++){
+            printf("| %-15s | %-8u | %-8u |\n", loans[i].username, loans[i].itemId, loans[i].quantity);
+        }
+    }
+    printf("=================================================================\n");
 }
 
 void adminCreateAccount() {
