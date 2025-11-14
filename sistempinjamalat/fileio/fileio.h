@@ -11,7 +11,7 @@
 typedef struct {
     char username[64];
     char password[64];
-    char role[16];      // admin or user
+    char role[16];      
 } Account;
 
 typedef struct {
