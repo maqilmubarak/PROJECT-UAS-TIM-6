@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include "login.h"
-#include "fileio.h"
+#include "../fileio/fileio.h"
 
 Account* authenticateCli() {
     char username[64];
@@ -34,7 +34,4 @@ Account* authenticateCli() {
     return NULL;
 }
 
-int addAccount(const char* user, const char* pass, const char* role) {
-
-}
 

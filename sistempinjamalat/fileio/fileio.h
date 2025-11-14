@@ -60,4 +60,7 @@ int findLoansIndex(const char * username, unsigned int itemId);
 int addOrUpdateLoans(const char * username, unsigned int itemId, unsigned int quantity);
 void adminListLoans();
 
+// Utility Function
+void trimNewline(char * s);
+
 #endif
