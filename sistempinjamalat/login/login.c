@@ -3,24 +3,15 @@
 #include "login.h"
 #include "../fileio/fileio.h"
 
-Account* authenticateCli() {
-    char username[64];
-    char password[64];
+Account* authenticateCli(int argc, char *argv[]) {
+    if (argc != 3) {
+        printf("Penggunaan: %s <username> <password>\n", argv[0]);
+        return NULL;
+    }
+
+    char *username = argv[1];
+    char *password = argv[2];
     Account* foundAccount = NULL;
-
-    printf("=== Login ===\n");
-    printf("Username: ");
-
-    if(!fgets(username, sizeof(username), stdin)) {
-        return NULL;
-    }
-    trimNewline(username);
-
-    printf("Password: ");
-    if(!fgets(password, sizeof(password), stdin)) {
-        return NULL;
-    }
-    trimNewline(password);
 
     foundAccount = findAccount(username);
 
