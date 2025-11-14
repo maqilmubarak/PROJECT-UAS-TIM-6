@@ -218,20 +218,28 @@ int findLoansIndex(const char *username, unsigned int itemId){
 
 int addOrUpdateLoans(const char *username, unsigned int itemId, unsigned int quantity){
     loadLoans();
+
+    int status = -1;
     int index = findLoansIndex(username, itemId);
+
     if (index >= 0){
         loans[index].quantity += quantity;
-    }else if(countLoan < MAX_LOANS){
-        strcpy(loans[countLoan].username, username);
+        status = 1;
+    } else if (countLoan < MAX_LOANS){
+        strncpy(loans[countLoan].username, username, sizeof(loans[0].username) - 1);
+        loans[countLoan].username[sizeof(loans[0].username) - 1] = '\0';
         loans[countLoan].itemId = itemId;
         loans[countLoan].quantity = quantity;
         countLoan++;
-    }else {
+        status = 0;
+    } else {
         printf("Error: Data pinjaman penuh.\n");
+        status = -1;
     }
-    saveLoans();
-}
 
+    saveLoans();
+    return status;
+}
  
 void adminListLoans(){
     loadLoans();
