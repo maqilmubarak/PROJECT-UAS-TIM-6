@@ -87,6 +87,36 @@ Account* findAccount(const char* username) {
     return NULL;
 }
 
+int addAccount(const char* user, const char* pass, const char* role) {
+    if (countAccount >= MAX_ACCOUNTS) {
+        printf("Error, Gagal Menambah akun %s, Database penuh\n", user);
+        return 0;
+    }
+    if (findAccount(user) != NULL) {
+        printf("Error, Username %s sudah ada\n", user);
+        return 0;
+    }
+
+    Account* newAccount = &accounts[countAccount];
+
+    strncpy(newAccount->username, user, sizeof(newAccount->username) - 1);
+    newAccount->username[sizeof(newAccount->username) - 1] = '\0';
+
+    strncpy(newAccount->password, pass, sizeof(newAccount->password) - 1);
+    newAccount->password[sizeof(newAccount->password) - 1] = '\0';
+
+    strncpy(newAccount->role, role, sizeof(newAccount->role) - 1);
+    newAccount->role[sizeof(newAccount->role) - 1] = '\0';
+
+    if (strlen(newAccount->role) == 0)
+        strcpy(newAccount->role, "user");
+
+    countAccount++;
+    printf("Sukses akun '%s' telah ditambahkan\n", user);
+    
+    return 1;
+}
+
 
 /* Functions For Items */
 void loadItems(){
@@ -252,4 +282,5 @@ int addOrUpdateLoans(const char *username, unsigned int itemId, unsigned int qua
     return status;
 }
  
+
 
