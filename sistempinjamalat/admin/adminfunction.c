@@ -49,7 +49,7 @@ void adminAddItems() {
     safeGets(buf, sizeof(buf));
     alat.quantity = (uint32_t) atoi(buf);
 
-    if (addItems(&alat)) {
+    if (addItem(&alat)) {
         printf("Item berhasil ditambahkan. ID = %u\n", alat.idAlat);
     } else {
         printf("Gagal menambah item.\n");
