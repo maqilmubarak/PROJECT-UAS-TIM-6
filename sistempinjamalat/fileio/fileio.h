@@ -65,4 +65,8 @@ void adminListLoans();
 // Utility Function
 void trimNewline(char * s);
 
+// Account function
+int addAccount(const char* user, const char* pass, const char* role);
+
+
 #endif
