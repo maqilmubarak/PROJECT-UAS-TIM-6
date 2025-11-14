@@ -21,36 +21,36 @@ void adminListItems(){
 }
 
 void adminAddItems() {
-    Item it;
+    Item alat;
     char buf[256];
 
-    it.idAlat = nextItemId();
+    alat.idAlat = nextItemId();
 
     printf("Nama alat: ");
     safeGets(buf, sizeof(buf));
-    strncpy(it.name, buf, sizeof(it.name) - 1);
-    it.name[sizeof(it.name) - 1] = '\0';
+    strncpy(alat.name, buf, sizeof(alat.name) - 1);
+    alat.name[sizeof(alat.name) - 1] = '\0';
 
     printf("Merek: ");
     safeGets(buf, sizeof(buf));
-    strncpy(it.merek, buf, sizeof(it.merek) - 1);
-    it.merek[sizeof(it.merek) - 1] = '\0';
+    strncpy(alat.merek, buf, sizeof(alat.merek) - 1);
+    alat.merek[sizeof(alat.merek) - 1] = '\0';
 
     printf("Model: ");
     safeGets(buf, sizeof(buf));
-    strncpy(it.model, buf, sizeof(it.model) - 1);
-    it.model[sizeof(it.model) - 1] = '\0';
+    strncpy(alat.model, buf, sizeof(alat.model) - 1);
+    alat.model[sizeof(alat.model) - 1] = '\0';
 
     printf("Tahun: ");
     safeGets(buf, sizeof(buf));
-    it.productionYear = (uint32_t) atoi(buf);
+    alat.productionYear = (uint32_t) atoi(buf);
 
     printf("Jumlah unit: ");
     safeGets(buf, sizeof(buf));
-    it.quantity = (uint32_t) atoi(buf);
+    alat.quantity = (uint32_t) atoi(buf);
 
-    if (addItems(&it)) {
-        printf("Item berhasil ditambahkan. ID = %u\n", it.idAlat);
+    if (addItems(&alat)) {
+        printf("Item berhasil ditambahkan. ID = %u\n", alat.idAlat);
     } else {
         printf("Gagal menambah item.\n");
     }
@@ -62,47 +62,47 @@ void adminEditItems() {
     safeGets(buf, sizeof(buf));
     uint32_t id = (uint32_t)atoi(buf);
 
-    Item *it = findItemById(id);
-    if (!it) {
+    Item *alat = findItemById(id);
+    if (!alat) {
         printf("ID tidak ditemukan.\n");
         return;
     }
 
     printf("Kosongkan input untuk tidak mengubah.\n");
 
-    printf("Nama (%s): ", it->name);
-    safeGets(buf, sizeof(buf));
-    if(strelen(buf)) {
-        strncpy(it->name, buf, sizeof(it->name)-1);
-        it->name[sizeof(it->name)-1] = '\0';
-    }
-
-    printf("Merek(%s): ", it->merek);
+    printf("Nama (%s): ", alat->name);
     safeGets(buf, sizeof(buf));
     if(strlen(buf)) {
-        strncpy(it->merek, buf, sizeof(it->merek)-1);
-        it->merek[sizeof(it->merek)-1] = '\0';
+        strncpy(alat->name, buf, sizeof(alat->name)-1);
+        alat->name[sizeof(alat->name)-1] = '\0';
     }
 
-    printf("Model (%s): ", it->model);
+    printf("Merek(%s): ", alat->merek);
     safeGets(buf, sizeof(buf));
     if(strlen(buf)) {
-        strncpy(it->model, buf, sizeof(it->model)-1);
-        it->model[sizeof(it->model)-1] = '\0';
+        strncpy(alat->merek, buf, sizeof(alat->merek)-1);
+        alat->merek[sizeof(alat->merek)-1] = '\0';
     }
 
-    printf("Tahun (%u): ", it->productionYear);
-    safe_gets(buf, sizeof(buf));
-    if (strlen(buf)) it->productionYear = (uint32_t)atoi(buf);
+    printf("Model (%s): ", alat->model);
+    safeGets(buf, sizeof(buf));
+    if(strlen(buf)) {
+        strncpy(alat->model, buf, sizeof(alat->model)-1);
+        alat->model[sizeof(alat->model)-1] = '\0';
+    }
 
-    printf("Jumlah (%u): ", it->quantity);
-    safe_gets(buf, sizeof(buf));
-    if (strlen(buf)) it->quantity = (uint32_t)atoi(buf);
+    printf("Tahun (%u): ", alat->productionYear);
+    safeGets(buf, sizeof(buf));
+    if (strlen(buf)) alat->productionYear = (uint32_t)atoi(buf);
 
-    if (update_item(it)) 
+    printf("Jumlah (%u): ", alat->quantity);
+    safeGets(buf, sizeof(buf));
+    if (strlen(buf)) alat->quantity = (uint32_t)atoi(buf);
+
+    if (updateItem(alat)) 
         printf("Item berhasil diupdate.\n");
     else 
-        printf("Gagal update item.\n");
+        printf("Gagal update item.\n");
 }
 
 
