@@ -156,6 +156,17 @@ int addItem(Item *newItem){
     return true;
 }
 
+int updateItem(Item *itemUpdate){
+    Item *ptrId = findItemById(itemUpdate->idAlat);
+    if(ptrId == NULL){ 
+        printf("[!] Alat Gagal Diperbaharui");
+        return 0; }
+
+    *ptrId = *itemUpdate;
+    saveItems();
+    return 1;
+}
+
 
 Item * findItemById(uint32_t id){
     for(int i = 0; i < countItem; i++){
