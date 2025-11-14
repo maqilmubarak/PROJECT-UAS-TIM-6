@@ -21,7 +21,39 @@ void adminListItems(){
 }
 
 void adminAddItems() {
+    Item it;
+    char buf[256];
 
+    it.idAlat = next_item_id();
+
+    printf("Nama alat: ");
+    safeGets(buf, sizeof(buf));
+    strncpy(it.name, buf, sizeof(it.name) - 1);
+    it.name[sizeof(it.name) - 1] = '\0';
+
+    printf("Merek: ");
+    safeGets(buf, sizeof(buf));
+    strncpy(it.merek, buf, sizeof(it.merek) - 1);
+    it.merek[sizeof(it.merek) - 1] = '\0';
+
+    printf("Model: ");
+    safeGets(buf, sizeof(buf));
+    strncpy(it.model, buf, sizeof(it.model) - 1);
+    it.model[sizeof(it.model) - 1] = '\0';
+
+    printf("Tahun: ");
+    safeGets(buf, sizeof(buf));
+    it.productionYear = (uint32_t) atoi(buf);
+
+    printf("Jumlah unit: ");
+    safeGets(buf, sizeof(buf));
+    it.quantity = (uint32_t) atoi(buf);
+
+    if (addItems(&it)) {
+        printf("Item berhasil ditambahkan. ID = %u\n", it.idAlat);
+    } else {
+        printf("Gagal menambah item.\n");
+    }
 }
 
 void adminEditItems() {
