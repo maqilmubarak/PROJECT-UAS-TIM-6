@@ -57,8 +57,54 @@ void adminAddItems() {
 }
 
 void adminEditItems() {
+    char buf[64];
+    printf("Masukkan ID item yang ingin diedit: ");
+    safeGets(buf, sizeof(buf));
+    uint32_t id = (uint32_t)atoi(buf);
 
+    Item *it = findItemById(id);
+    if (!it) {
+        printf("ID tidak ditemukan.\n");
+        return;
+    }
+
+    printf("Kosongkan input untuk tidak mengubah.\n");
+
+    printf("Nama (%s): ", it->name);
+    safeGets(buf, sizeof(buf));
+    if(strelen(buf)) {
+        strncpy(it->name, buf, sizeof(it->name)-1);
+        it->name[sizeof(it->name)-1] = '\0';
+    }
+
+    printf("Merek(%s): ", it->merek);
+    safeGets(buf, sizeof(buf));
+    if(strlen(buf)) {
+        strncpy(it->merek, buf, sizeof(it->merek)-1);
+        it->merek[sizeof(it->merek)-1] = '\0';
+    }
+
+    printf("Model (%s): ", it->model);
+    safeGets(buf, sizeof(buf));
+    if(strlen(buf)) {
+        strncpy(it->model, buf, sizeof(it->model)-1);
+        it->model[sizeof(it->model)-1] = '\0';
+    }
+
+    printf("Tahun (%u): ", it->productionYear);
+    safe_gets(buf, sizeof(buf));
+    if (strlen(buf)) it->productionYear = (uint32_t)atoi(buf);
+
+    printf("Jumlah (%u): ", it->quantity);
+    safe_gets(buf, sizeof(buf));
+    if (strlen(buf)) it->quantity = (uint32_t)atoi(buf);
+
+    if (update_item(it)) 
+        printf("Item berhasil diupdate.\n");
+    else 
+        printf("Gagal update item.\n");
 }
+
 
 void adminDeleteItems() {
 
