@@ -3,7 +3,7 @@
 #include "../fileio/fileio.h"
 
 Account* findAccount(const char* username);
-Account* authenticateCli();
+Account* authenticateCli(int argc, char *argv[]);
 
 
 #endif
