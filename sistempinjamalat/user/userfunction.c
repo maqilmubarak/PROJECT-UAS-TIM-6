@@ -1,13 +1,14 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <stdbool.h>
 #include "userfunction.h"
 #include "../fileio/fileio.h"
 #include "../utils/utils.h"
 
 void userListAvailable() {
     printf("\n=== DAFTAR ALAT LAB YANG TERSEDIA ===\n");
-    int found = 0;
+    bool found = false;
 
     for (int i = 0; i < countItem; i++) {
         if (items[i].quantity > 0) {
@@ -18,11 +19,11 @@ void userListAvailable() {
                 items[i].model,
                 items[i].productionYear,
                 items[i].quantity);
-            found = 1;
+            found = true;
         }
     }
 
-    if (found == NULL) {
+    if (found == false) {
         printf("Tidak ada alat tersedia.\n");
     }
 
