@@ -238,7 +238,7 @@ int addOrUpdateLoans(const char *username, unsigned int itemId, unsigned int qua
     }
 
     saveLoans();
-    return status;
+    return 1;
 }
  
 void adminListLoans(){
