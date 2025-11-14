@@ -78,6 +78,16 @@ void saveAccounts(){
     fclose(fptr);
 }
 
+Account* findAccount(const char* username) {
+    for(int i = 0; i < countAccount; i++) {
+        if (strcmp(username, accounts[i].username) == 0) {
+            return &accounts[i];
+        }
+    }
+    return NULL;
+}
+
+
 /* Functions For Items */
 void loadItems(){
     countItem = 0;
@@ -149,9 +159,11 @@ int addItem(Item *newItem){
 
 Item * findItemById(uint32_t id){
     for(int i = 0; i < countItem; i++){
-        if(items[i].idAlat == id);
-        return &items[i];
+        if(items[i].idAlat == id){
+            return &items[i];
+        }
     }
+    return NULL;
 }
 
 uint32_t nextItemId() {
@@ -160,8 +172,8 @@ uint32_t nextItemId() {
         if (items[i].idAlat > max){
             max = items[i].idAlat;
         } 
-        return max + 1;
     } 
+    return max + 1;
 }
 
 void loadLoans(){

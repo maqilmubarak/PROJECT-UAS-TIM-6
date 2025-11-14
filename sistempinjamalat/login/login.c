@@ -2,15 +2,6 @@
 #include <string.h>
 #include "login.h"
 
-Account* findAccount(const char* username) {
-    for(int i = 0; i < countAccount; i++) {
-        if (strcmp(username, accounts[i].username) == 0) {
-            return &accounts[i];
-        }
-    }
-    return NULL;
-}
-
 Account* authenticateCli() {
     char username[64];
     char password[64];
