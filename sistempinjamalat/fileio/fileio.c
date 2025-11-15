@@ -311,6 +311,30 @@ int addOrUpdateLoans(const char *username, unsigned int itemId, unsigned int qua
     saveLoans();
     return status;
 }
- 
 
+int removeOrDecreaseLoan(const char *username, uint32_t itemId, uint32_t quantity) {
 
+    int index = findLoansIndex(username, itemId);
+    if (index == -1) {
+        printf("Loan tidak ditemukan!\n");
+        return 0;
+    }
+
+    if (quantity > loans[index].quantity) {
+        printf("Jumlah dikembalikan melebihi jumlah yang dipinjam!\n");
+        return 0;
+    }
+
+    if (quantity == loans[index].quantity) {
+        for (int i = index; i < countLoan - 1; i++) {
+            loans[i] = loans[i + 1];
+        }
+        countLoan--;
+    } 
+    else {
+        loans[index].quantity -= quantity;
+    }
+
+    saveLoans();
+    return 1;
+}
