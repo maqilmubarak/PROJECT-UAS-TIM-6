@@ -198,23 +198,30 @@ int updateItem(Item *itemUpdate){
 }
 
 int deleteItem(uint32_t *idDelete){
-    int indexItem;
-    for(int i = 0; i < countItem; i++){
-        if(items[i].idAlat == idDelete){
-            indexItem = i;
-            break
-        }
-    }
-
-    if(indexItem < 0){
+    int indexItem = findItemById(*idDelete);
+    if(indexItem == -1){
         return 0;
     }
 
-    for(int j = indexItem; j < countItem - 1; j++){
+    for(int i = indexItem; i < countItem - 1; i++){
         items[i] = items[i+1];
     }
     countItem--;
     saveItems();
+
+    int j = 0;
+    while(j < countLoan){
+        if(loans[j].itemId == *idDelete){
+            for(int k = j; k < countLoan - 1; k++){
+                loans[k] = loans[k + 1];
+            }
+            countLoan--;
+        } else {
+            j++;
+        }
+    }
+    saveLoans();
+    return 1;
 }
 
 
