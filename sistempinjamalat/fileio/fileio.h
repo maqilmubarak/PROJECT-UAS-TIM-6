@@ -51,6 +51,7 @@ void saveLoans();
 
 // Finding and CRUD Function
 Item* findItemById(uint32_t id);
+Account* findAccount(const char *username);
 uint32_t nextItemId();
 int addItem(Item *newItem);
 int updateItem(Item *itemUpdate);
@@ -59,6 +60,7 @@ int deleteItem(uint32_t idDelete);
 // save and load loans Fuction
 int findLoansIndex(const char * username, unsigned int itemId);
 int addOrUpdateLoans(const char * username, unsigned int itemId, unsigned int quantity);
+int removeOrDecreaseLoan(const char *username, uint32_t itemId, uint32_t quantity);
 
 // Utility Function
 void trimNewline(char * s);
@@ -66,7 +68,5 @@ void trimNewline(char * s);
 // Account function
 int addAccount(const char* user, const char* pass, const char* role);
 
-// return the loan Function
-int removeOrDecreaseLoan(const char *username, uint32_t itemId, uint32_t quantity);
 
 #endif

@@ -84,30 +84,21 @@ Account* findAccount(const char* username) {
 }
 
 int addAccount(const char* user, const char* pass, const char* role) {
-    if (countAccount >= MAX_ACCOUNTS) {
-        printf("Error, Gagal Menambah akun %s, Database penuh\n", user);
-        return 0;
-    }
     if (findAccount(user) != NULL) {
         printf("Error, Username %s sudah ada\n", user);
         return 0;
     }
+    if (countAccount >= MAX_ACCOUNTS) {
+        printf("Error, Gagal Menambah akun %s, Database penuh\n", user);
+        return 0;
+    }
 
-    Account* newAccount = &accounts[countAccount];
-
-    strncpy(newAccount->username, user, sizeof(newAccount->username) - 1);
-    newAccount->username[sizeof(newAccount->username) - 1] = '\0';
-
-    strncpy(newAccount->password, pass, sizeof(newAccount->password) - 1);
-    newAccount->password[sizeof(newAccount->password) - 1] = '\0';
-
-    strncpy(newAccount->role, role, sizeof(newAccount->role) - 1);
-    newAccount->role[sizeof(newAccount->role) - 1] = '\0';
-
-    if (strlen(newAccount->role) == 0)
-        strcpy(newAccount->role, "user");
+    strncpy(accounts[countAccount].username, user, sizeof(accounts[0].username)-1);
+    strncpy(accounts[countAccount].password, pass, sizeof(accounts[0].password)-1);
+    strncpy(accounts[countAccount].role, role, sizeof(accounts[0].role)-1);
 
     countAccount++;
+    saveAccounts();
     printf("Sukses akun '%s' telah ditambahkan\n", user);
     
     return 1;
