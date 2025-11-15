@@ -15,8 +15,6 @@ int main(int argc, char *argv[]){
     Account *acc = authenticateCli(argc, argv);
     if(acc == NULL){return EXIT_FAILURE;}
 
-    printf("Login Berhasil\n");
-
     if(strcmp(acc->role, "admin") == 0){ adminMenu(acc->username); }
     else{ userMenu(acc->username); }
 
