@@ -54,15 +54,15 @@ void loadAccounts(){
         *userSeparator = '\0';
         *passwdSeparator = '\0';
 
-        // copy line to account[].username and substract 1 for NULL BYTE
-        strncpy(accounts[countAccount].username, line, sizeof(accounts[0].username) - 1);
-        strncpy(accounts[countAccount].password, userSeparator + 1, sizeof(accounts[0].password) - 1);
-        strncpy(accounts[countAccount].role, passwdSeparator + 1, sizeof(accounts[0].role) - 1);
-        countAccount++;
+        strncpy(accounts[countAccount].username, line, sizeof(accounts[countAccount].username) - 1);
+        accounts[countAccount].username[sizeof(accounts[countAccount].username) - 1] = '\0';
 
-        accounts[countAccount].username[sizeof(accounts[0].username) - 1] = '\0';
-        accounts[countAccount].password[sizeof(accounts[0].password) - 1] = '\0';
-        accounts[countAccount].role[sizeof(accounts[0].role) - 1] = '\0';
+        strncpy(accounts[countAccount].password, userSeparator + 1, sizeof(accounts[countAccount].password) - 1);
+        accounts[countAccount].password[sizeof(accounts[countAccount].password) - 1] = '\0';
+
+        strncpy(accounts[countAccount].role, passwdSeparator + 1, sizeof(accounts[countAccount].role) - 1);
+        accounts[countAccount].role[sizeof(accounts[countAccount].role) - 1] = '\0';
+        countAccount++;
 
         if(countAccount >= MAX_ACCOUNTS){ break; }
     }
