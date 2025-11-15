@@ -66,5 +66,7 @@ void trimNewline(char * s);
 // Account function
 int addAccount(const char* user, const char* pass, const char* role);
 
+// return the loan Function
+int removeOrDecreaseLoan(const char *username, uint32_t itemId, uint32_t quantity);
 
 #endif
