@@ -197,6 +197,26 @@ int updateItem(Item *itemUpdate){
     return 1;
 }
 
+int deleteItem(uint32_t *idDelete){
+    int indexItem;
+    for(int i = 0; i < countItem; i++){
+        if(items[i].idAlat == idDelete){
+            indexItem = i;
+            break
+        }
+    }
+
+    if(indexItem < 0){
+        return 0;
+    }
+
+    for(int j = indexItem; j < countItem - 1; j++){
+        items[i] = items[i+1];
+    }
+    countItem--;
+    saveItems();
+}
+
 
 Item * findItemById(uint32_t id){
     for(int i = 0; i < countItem; i++){
