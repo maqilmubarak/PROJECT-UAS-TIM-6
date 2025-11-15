@@ -96,7 +96,7 @@ void userReturn(const char *username) {
     safeGets(buf, sizeof(buf));
     uint32_t id = (uint32_t)atoi(buf);
 
-    int itemIndex = findLoanIndex(username, id);
+    int itemIndex = findLoansIndex(username, id);
     if (itemIndex == -1) {
         printf("Anda tidak meminjam alat dengan ID tersebut.\n");
         return;
