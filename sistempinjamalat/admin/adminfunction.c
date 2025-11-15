@@ -107,7 +107,18 @@ void adminEditItems() {
 
 
 void adminDeleteItems() {
+    char buf[64];
 
+    printf("Masukkan ID item yang ingin dihapus: ");
+    safeGets(buf, sizeof(buf));
+
+    uint32_t id = (uint32_t)atoi(buf);
+
+    if(deleteItem(id)) {
+        printf("Item dan peminjaman terkait dihapus.\n");
+    } else {
+        printf("Hapus item gagal. ID tidak ditemukan.\n");
+    }
 }
 
 void adminListLoans(){
@@ -172,20 +183,5 @@ void adminMenu(const char *username) {
         else {
             printf("Pilihan tidak valid!\n");
         }
-    }
-}
-
-void adminDeleteItems() {
-    char buf[64];
-
-    printf("Masukkan ID item yang ingin dihapus: ");
-    safeGets(buf, sizeof(buf));
-
-    uint32_t id = (uint32_t)atoi(buf);
-
-    if(deleteItem(id)) {
-        printf("Item dan peminjaman terkait dihapus.\n");
-    } else {
-        printf("Hapus item gagal. ID tidak ditemukan.\n");
     }
 }
