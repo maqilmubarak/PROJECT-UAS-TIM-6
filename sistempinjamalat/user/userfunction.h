@@ -6,5 +6,7 @@
 void userMenu(const char *username);
 
 void userListAvailable();                
+void userBorrow();
+void userListBorrowed();
 
 #endif

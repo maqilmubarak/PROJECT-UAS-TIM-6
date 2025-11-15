@@ -66,8 +66,27 @@ void userBorrow(const char *username) {
     printf("Berhasil meminjam %u unit '%s'.\n", jumlahPinjam, alat->name);
 }
 
-void userListBorrowed() {
+void userListBorrowed(const char *username) {
+    
+    printf("\n=== DAFTAR ALAT YANG ANDA PINJAM ===\n");
+    int found = 0;
 
+    for (int i = 0; i < countLoan; i++) {
+        if (strcmp(loans[i].username, username) == 0) {
+            Item *alat = findItemById(loans[i].itemId);
+
+            printf("%u | %s | Jumlah: %u\n",
+                loans[i].itemId,
+                alat ? alat->name : "(Item telah dihapus)",
+                loans[i].quantity);
+
+            found = 1;
+        }
+    }
+
+    if (found == false) {
+        printf("Anda belum meminjam alat.\n");
+    }
 }
 
 void userReturn() {
