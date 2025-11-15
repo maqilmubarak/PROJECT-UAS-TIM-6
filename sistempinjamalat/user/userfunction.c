@@ -89,8 +89,38 @@ void userListBorrowed(const char *username) {
     }
 }
 
-void userReturn() {
+void userReturn(const char *username) {
+    char buf[64];
 
+    printf("Masukkan ID alat yang ingin dikembalikan: ");
+    safeGets(buf, sizeof(buf));
+    uint32_t id = (uint32_t)atoi(buf);
+
+    int itemIndex = findLoanIndex(username, id);
+    if (itemIndex == -1) {
+        printf("Anda tidak meminjam alat dengan ID tersebut.\n");
+        return;
+    }
+
+    printf("Anda meminjam %u unit. Masukkan jumlah yang dikembalikan: ",
+           loans[itemIndex].quantity);
+    safeGets(buf, sizeof(buf));
+    uint32_t jumlahKembali = (uint32_t)atoi(buf);
+
+    if (jumlahKembali == 0 || jumlahKembali > loans[itemIndex].quantity) {
+        printf("Jumlah tidak valid.\n");
+        return;
+    }
+
+    Item *alat = findItemById(id);
+    if (alat != NULL) {
+        alat->quantity += jumlahKembali;
+        saveItems();
+    }
+
+    removeOrDecreaseLoan(username, id, jumlahKembali);
+
+    printf("Berhasil mengembalikan %u unit.\n", jumlahKembali);
 }
 
 void userMenu(const char *username) {
