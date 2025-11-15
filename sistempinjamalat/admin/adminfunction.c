@@ -139,7 +139,43 @@ void adminListLoans(){
 }
 
 void adminCreateAccount() {
+    char username[64], password[64], role[16];
 
+    // Input username
+    printf("Masukkan username baru: ");
+    safe_gets(username, sizeof(username));
+
+    if (strlen(username) == 0) {
+        printf("Username tidak boleh kosong.\n");
+        return;
+    }
+
+    // Cek apakah username sudah ada
+    if (find_account(username)) {
+        printf("Username sudah ada.\n");
+        return;
+    }
+
+    // Input password
+    printf("Masukkan password: ");
+    safe_gets(password, sizeof(password));
+
+    // Input role
+    printf("Role (admin/user): ");
+    safe_gets(role, sizeof(role));
+
+    // Validasi role
+    if (strcmp(role, "admin") != 0 && strcmp(role, "user") != 0) {
+        printf("Role tidak valid.\n");
+        return;
+    }
+
+    // Buat akun
+    if (add_account(username, password, role)) {
+        printf("Akun dibuat.\n");
+    } else {
+        printf("Gagal membuat akun.\n");
+    }
 }
 
 void adminMenu(const char *username) {
