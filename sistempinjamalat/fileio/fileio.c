@@ -30,10 +30,11 @@ void trimNewline(char * s){
 void loadAccounts(){
     countAccount = 0;
     FILE *fptr = fopen("./data/account.txt", "r");
-    if(!fptr){
+    if(fptr == NULL){
         fptr = fopen("./data/account.txt", "w");
         // Default credential
         fprintf(fptr, "admin|admin123|admin\n");
+        fprintf(fptr, "user|user123|user\n");
         fclose(fptr);
     }
 
@@ -55,13 +56,8 @@ void loadAccounts(){
         *passwdSeparator = '\0';
 
         strncpy(accounts[countAccount].username, line, sizeof(accounts[countAccount].username) - 1);
-        accounts[countAccount].username[sizeof(accounts[countAccount].username) - 1] = '\0';
-
         strncpy(accounts[countAccount].password, userSeparator + 1, sizeof(accounts[countAccount].password) - 1);
-        accounts[countAccount].password[sizeof(accounts[countAccount].password) - 1] = '\0';
-
         strncpy(accounts[countAccount].role, passwdSeparator + 1, sizeof(accounts[countAccount].role) - 1);
-        accounts[countAccount].role[sizeof(accounts[countAccount].role) - 1] = '\0';
         countAccount++;
 
         if(countAccount >= MAX_ACCOUNTS){ break; }
