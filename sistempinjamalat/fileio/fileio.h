@@ -57,11 +57,8 @@ int updateItem(Item *itemUpdate);
 int deleteItem(uint32_t *idDelete);
 
 // save and load loans Fuction
-void loadLoans();
-void saveLoans();
 int findLoansIndex(const char * username, unsigned int itemId);
 int addOrUpdateLoans(const char * username, unsigned int itemId, unsigned int quantity);
-void adminListLoans();
 
 // Utility Function
 void trimNewline(char * s);
