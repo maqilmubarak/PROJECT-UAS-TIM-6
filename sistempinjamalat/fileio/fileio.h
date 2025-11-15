@@ -54,7 +54,7 @@ Item* findItemById(uint32_t id);
 uint32_t nextItemId();
 int addItem(Item *newItem);
 int updateItem(Item *itemUpdate);
-int deleteItem(uint32_t *idDelete);
+int deleteItem(uint32_t idDelete);
 
 // save and load loans Fuction
 int findLoansIndex(const char * username, unsigned int itemId);
