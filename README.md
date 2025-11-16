@@ -65,3 +65,44 @@ Program mencakup:
 | 5  | **Muhammad Khishal Ardana** | 250810701100070 |
 
 ---
+# 🗃️ Struktur Direktori
+
+```
+PROJECT-UAS-TIM-6
+│
+├── kosakatalirik
+│   ├── lirik.txt
+│   └── main.c
+│
+└── sistempinjamalat
+    ├── admin
+    │   ├── adminfunction.c
+    │   └── adminfunction.h
+    │
+    ├── data
+    │   ├── account.txt
+    │   ├── items.txt
+    │   └── loan.txt
+    │
+    ├── fileio
+    │   ├── fileio.c
+    │   └── fileio.h
+    │
+    ├── login
+    │   ├── login.c
+    │   └── login.h
+    │
+    ├── user
+    │   ├── userfunction.c
+    │   └── userfunction.h
+    │
+    ├── utils
+    │   ├── utils.c
+    │   └── utils.h
+    │
+    ├── main.c
+    ├── makefile
+    └── LICENSE
+```
+
+---
