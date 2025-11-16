@@ -106,3 +106,26 @@ PROJECT-UAS-TIM-6
 ```
 
 ---
+
+# 🧠 **Penjelasan Program**
+
+## 🔑 1. Sistem Login
+
+**Folder:** `sistempinjamalat/login/`
+
+* `login.c`
+* `login.h`
+
+**Fungsi inti:**
+
+* Validasi username & password
+* Deteksi role (admin/user)
+* Redirect ke menu yang sesuai
+
+**Data user tersimpan di:**
+
+```
+sistempinjamalat/data/account.txt
+```
+
+---
