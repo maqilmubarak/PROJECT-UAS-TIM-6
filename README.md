@@ -410,3 +410,52 @@ Operasi peminjaman:
 **File:** `fileio.c` & `fileio.h`
 
 Mengelola semua operasi baca/tulis file untuk menjaga konsistensi data.
+
+### 6️⃣ **Utilities: utils/**
+**File:** `utils.c` & `utils.h`
+
+Helper functions untuk input validation, string manipulation, error handling, dan terminal formatting.
+
+---
+
+## 📊 Data Flow Diagram
+
+```
+┌─────────────┐
+│ User Input  │
+│ (CLI Args)  │
+└──────┬──────┘
+       │
+       ▼
+┌─────────────────┐
+│ Login Module    │──────> Baca account.txt (via fileio)
+└────────┬────────┘
+         │
+    ┌────┴────┐
+    │  Role?  │
+    └────┬────┘
+         │
+    ┌────┴────────────┐
+    │                 │
+    ▼                 ▼
+┌─────────┐      ┌──────────┐
+│  Admin  │      │   User   │
+│  Menu   │      │   Menu   │
+└────┬────┘      └────┬─────┘
+     │                │
+     ▼                ▼
+  CRUD Ops        Loan Ops
+     │                │
+     └────┬───────────┘
+          ▼
+    ┌────────────┐
+    │  fileio    │
+    │  Module    │
+    └──────┬─────┘
+           │
+      ┌────┴────┐
+      ▼         ▼
+   items.txt  loan.txt
+```
+
+---
