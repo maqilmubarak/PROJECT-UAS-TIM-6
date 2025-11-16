@@ -12,7 +12,7 @@ void alphabetOnlyCoy(char *src, char *dest){
     int i = 0;
     for(int j = 0; src[j] != '\0'; j++){
         if(isalpha(src[j]) || src[j] == '\''){
-            dest[i] = tolower(src[i]);
+            dest[j] = tolower(src[j]);
             i++;     
         }
     }
@@ -40,7 +40,7 @@ int main(){
         printf("[!] Tidak dapat membuka file lirik.txt\n");
         return EXIT_FAILURE;
     }
-
+while (fgets(baris, sizeof(baris), fptr)) {
     char *perKata = strtok(baris, " \n");
     while(perKata != NULL){
         alphabetOnlyCoy(perKata, kataAlphabetOnly);
@@ -52,6 +52,7 @@ int main(){
 
         perKata = strtok(NULL, " \n");
     }
+}    
     fclose(fptr);
 
     FILE *out = fopen("kosa-kata.txt", "w");
