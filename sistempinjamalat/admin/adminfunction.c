@@ -42,6 +42,50 @@ void adminListItems(){ //fungsi untuk menampilkan semua alat
 
 }
 
+void adminSearchItems() {
+    char query[128];
+
+    printf(CYAN BOLD "\n=== CARI ALAT ===\n" RESET);
+    printf("Masukkan nama alat yang ingin dicari: ");
+    safeGets(query, sizeof(query));
+
+    if (strlen(query) == 0) {
+        printf(RED "Query pencarian tidak boleh kosong.\n" RESET);
+        return;
+    }
+
+    printf(CYAN BOLD "\n--- HASIL PENCARIAN ---\n" RESET);
+
+    // Header tabel
+    printf(YELLOW BOLD "+--------+----------------------+----------------------+----------------------+--------+--------+\n" RESET);
+    printf(YELLOW BOLD "| ID     | Nama                 | Merek                | Model                | Tahun  | Stok   |\n" RESET);
+    printf(YELLOW BOLD "+--------+----------------------+----------------------+----------------------+--------+--------+\n" RESET);
+
+    int found = 0;
+
+    for (int i = 0; i < countItem; i++) {
+        if (strstr(items[i].name, query) != NULL) {
+            printf("| %-6u | %-20s | %-20s | %-20s | %-6u | %-6u |\n",
+                items[i].idAlat,
+                items[i].name,
+                items[i].merek,
+                items[i].model,
+                items[i].productionYear,
+                items[i].quantity
+            );
+            found = 1;
+        }
+    }
+
+    // Footer tabel
+    printf(YELLOW BOLD "+--------+----------------------+----------------------+----------------------+--------+--------+\n" RESET);
+
+    if (!found) {
+        printf(RED "Tidak ada alat yang ditemukan dengan nama '%s'.\n" RESET, query);
+    }
+}
+
+
 //menambahkan alat
 void adminAddItems() { //fungsi untuk menambah alat baru
     Item alat; //struct untuk alat data baru
@@ -224,7 +268,8 @@ void adminMenu(const char *username) { //fungsi untuk menu utama admin
         printf(WHITE BOLD"4. Hapus alat\n"RESET);
         printf(WHITE BOLD"5. Lihat semua peminjaman\n"RESET);
         printf(WHITE BOLD"6. Buat akun baru\n"RESET);
-        printf(WHITE BOLD"7. Logout\n"RESET);
+        printf(WHITE BOLD"7. Cari alat\n"RESET);
+        printf(WHITE BOLD"8. Logout\n"RESET);
         printf(WHITE BOLD"Pilih: "RESET);
 
         safeGets(choice, sizeof(choice)); //input pilihan menu
@@ -248,6 +293,9 @@ void adminMenu(const char *username) { //fungsi untuk menu utama admin
             adminCreateAccount();
         }
         else if (strcmp(choice, "7") == 0) {
+            adminSearchItems();
+        }
+        else if (strcmp(choice, "8") == 0) {
             printf(WHITE BOLD "GOOD BYE\n");
             break;
         }

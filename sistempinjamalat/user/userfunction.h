@@ -4,10 +4,6 @@
 #include <stdio.h>
 
 void userMenu(const char *username);
-
-void userListAvailable();                
-void userBorrow();
-void userListBorrowed();
-void userReturn();
+void userSearchItem();
 
 #endif

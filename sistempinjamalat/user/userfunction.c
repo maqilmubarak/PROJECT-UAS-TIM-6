@@ -48,6 +48,53 @@ void userListAvailable() {
     }
 }
 
+void userSearchItems(const char *username) {
+    char query[128];
+
+    printf(CYAN BOLD "\n=== CARI ALAT TERSEDIA ===\n" RESET);
+    printf("Masukkan nama alat yang ingin dicari: ");
+    safeGets(query, sizeof(query));
+
+    if (strlen(query) == 0) {
+        printf(RED "Query pencarian tidak boleh kosong.\n" RESET);
+        return;
+    }
+
+    printf(CYAN BOLD "\n--- HASIL PENCARIAN TERSEDIA ---\n" RESET);
+
+    // Header tabel
+    printf(YELLOW BOLD "+--------+----------------------+----------------------+----------------------+--------+--------+\n" RESET);
+    printf(YELLOW BOLD "| ID     | Nama                 | Merek                | Model                | Tahun  | Stok   |\n" RESET);
+    printf(YELLOW BOLD "+--------+----------------------+----------------------+----------------------+--------+--------+\n" RESET);
+
+    int found = 0;
+
+    for (int i = 0; i < countItem; i++) {
+
+        // Harus quantity > 0 dan nama sesuai
+        if (items[i].quantity > 0 && strstr(items[i].name, query) != NULL) {
+
+            printf("| %-6u | %-20s | %-20s | %-20s | %-6u | %-6u |\n",
+                items[i].idAlat,
+                items[i].name,
+                items[i].merek,
+                items[i].model,
+                items[i].productionYear,
+                items[i].quantity
+            );
+
+            found = 1;
+        }
+    }
+
+    printf(YELLOW BOLD "+--------+----------------------+----------------------+----------------------+--------+--------+\n" RESET);
+
+    if (!found) {
+        printf(RED "Tidak ada alat tersedia yang ditemukan dengan nama '%s'.\n" RESET, query);
+    }
+}
+
+
 
 void userBorrow(const char *username) {
     char buf[64];
@@ -151,7 +198,8 @@ void userMenu(const char *username) {
         printf(GREEN "2." RESET " Pinjam alat\n");
         printf(GREEN "3." RESET " Lihat alat yang dipinjam\n");
         printf(GREEN "4." RESET " Kembalikan alat\n");
-        printf(GREEN "5." RESET " Logout\n");
+        printf(GREEN "5." RESET " Cari alat tersedia\n");
+        printf(GREEN "6." RESET " Logout\n");
 
         printf(YELLOW "Pilih: " RESET);
         safeGets(choice, sizeof(choice));
@@ -164,7 +212,9 @@ void userMenu(const char *username) {
             userListBorrowed(username);
         else if (strcmp(choice, "4") == 0)
             userReturn(username);
-        else if (strcmp(choice, "5") == 0) {
+        else if (strcmp(choice, "5") == 0)
+            userSearchItems(username);
+        else if (strcmp(choice, "6") == 0) {
             printf("Logout.\n");
             break;
         } else
