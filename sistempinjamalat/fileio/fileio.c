@@ -105,7 +105,7 @@ int addAccount(const char* user, const char* pass, const char* role) {
 }
 
 
-/* Functions For Items */
+// Function untuk membaca dan menulis isi file item.txt
 void loadItems(){
     countItem = 0;
     FILE *fptr = fopen("./data/items.txt", "r");
@@ -118,6 +118,7 @@ void loadItems(){
     }
 
     char line[1024];
+    // Loop membaca setiap baris isi file items.txt
     while (fgets(line, sizeof(line), fptr) && countItem < MAX_ITEMS) {
         trimNewline(line);
         if (strlen(line) == 0) continue;
@@ -126,6 +127,7 @@ void loadItems(){
         int i = 0;
         char *parts[6] = {0};
 
+        // Split teks dengan "|"
         token = strtok(line, "|");
         while (token && i < 6) {
             parts[i++] = token;
@@ -134,13 +136,16 @@ void loadItems(){
 
         if (i != 6) continue;  
 
+        // Pemecahan dan copy field ke struct 
         items[countItem].idAlat = (uint32_t) strtoul(parts[0], NULL, 10);
+        // Mencegah buffer overflow
         strncpy(items[countItem].name,  parts[1], sizeof(items[0].name) - 1);
         strncpy(items[countItem].merek, parts[2], sizeof(items[0].merek) - 1);
         strncpy(items[countItem].model, parts[3], sizeof(items[0].model) - 1);
         items[countItem].productionYear = (uint32_t) strtoul(parts[4], NULL, 10);
         items[countItem].quantity = (uint32_t) strtoul(parts[5], NULL, 10);
 
+        // Memastikan string ter-terminate '\0' agar tidak corrupt saat di print
         items[countItem].name[sizeof(items[0].name) - 1] = '\0';
         items[countItem].merek[sizeof(items[0].merek) - 1] = '\0';
         items[countItem].model[sizeof(items[0].model) - 1] = '\0';
@@ -151,6 +156,7 @@ void loadItems(){
     fclose(fptr);
 }
 
+// Function untuk menyimpan item ke file item.txt
 void saveItems(){
     FILE *fptr = fopen("./data/items.txt", "w");
     if(fptr == NULL) {
