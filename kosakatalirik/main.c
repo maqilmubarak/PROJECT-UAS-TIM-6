@@ -1,3 +1,7 @@
+#define GREEN   "\033[32m"
+#define RED     "\033[31m"
+#define BOLD    "\033[1m"
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -11,7 +15,7 @@ typedef struct {
 void alphabetOnlyCoy(char *src, char *dest){
     int i = 0;
     for(int j = 0; src[j] != '\0'; j++){
-        if(isalpha(src[j]) || src[j] == '\''){
+        if(isalpha((unsigned char)src[j]) || src[j] == '\''){
             dest[j] = tolower(src[j]);
             i++;     
         }
@@ -37,7 +41,7 @@ int main(){
     FILE *fptr = fopen("lirik.txt", "r");
 
     if(fptr == NULL){
-        printf("[!] Tidak dapat membuka file lirik.txt\n");
+        printf(RED BOLD"[!] Tidak dapat membuka file lirik.txt\n");
         return EXIT_FAILURE;
     }
 while (fgets(baris, sizeof(baris), fptr)) {
@@ -58,7 +62,7 @@ while (fgets(baris, sizeof(baris), fptr)) {
     FILE *out = fopen("kosa-kata.txt", "w");
 
     if (out == NULL) {
-        printf("[!] Tidak dapat membuat file kosa-kata.txt\n");
+        printf(RED BOLD"[!] Tidak dapat membuat file kosa-kata.txt\n");
         return EXIT_FAILURE;
     }
 
@@ -68,7 +72,7 @@ while (fgets(baris, sizeof(baris), fptr)) {
 
     fclose(out);
 
-    printf("[+] Berhasil! File kosa-kata.txt telah dibuat.\n");
+    printf(GREEN BOLD "[+] Berhasil! File kosa-kata.txt telah dibuat.\n");
 
     return EXIT_SUCCESS;
 }

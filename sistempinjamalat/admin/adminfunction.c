@@ -5,20 +5,41 @@
 #include "../fileio/fileio.h"
 #include "../utils/utils.h"
 
+#define RESET   "\033[0m"
+#define RED     "\033[31m"
+#define GREEN   "\033[32m"
+#define YELLOW  "\033[33m"
+#define BLUE    "\033[34m"
+#define MAGENTA "\033[35m"
+#define CYAN    "\033[36m"
+#define BOLD    "\033[1m"
+#define WHITE "\033[37m"
+
 //menampilkan daftar alat
 void adminListItems(){ //fungsi untuk menampilkan semua alat
-    printf("\nDAFTAR ALAT\n");
+    printf("\n" CYAN BOLD "=========== DAFTAR ALAT ===========" RESET "\n");
     if(countItem == 0) {
-        printf("Alat belum tersedia.\n");
+        printf(RED "Alat belum tersedia.\n" RESET);
         return;
    }
 
-   printf("ID | NAMA | MERK | MODEL | TAHUN | JUMLAH\n"); //header tabel
-   for(int i = 0; i < countItem; i++) { //loop untuk menampilkan seluruh item
-    printf("%u | %s | %s | %s | %u | %u\n",
-    items[i].idAlat, items[i].name, items[i].merek, items[i].model, items[i].productionYear, items[i].quantity);
+    printf(WHITE BOLD"+---------------------------------------------------------------------------------------+\n");
+    printf(YELLOW BOLD "| %-5s | %-20s | %-15s | %-15s | %-6s | %-6s    |\n" RESET,
+        "ID", "Nama", "Merek", "Model", "Tahun", "Jumlah");
+    printf(WHITE BOLD "+---------------------------------------------------------------------------------------+\n");
 
-   }
+    for(int i = 0; i < countItem; i++) {
+        printf("| %-5u | %-20s | %-15s | %-15s | %-6u | %-6u    |\n",
+            items[i].idAlat,
+            items[i].name,
+            items[i].merek,
+            items[i].model,
+            items[i].productionYear,
+            items[i].quantity
+        );
+    }
+    printf("+---------------------------------------------------------------------------------------+\n");
+
 }
 
 //menambahkan alat
@@ -28,49 +49,52 @@ void adminAddItems() { //fungsi untuk menambah alat baru
 
     alat.idAlat = nextItemId(); //ambil id baru otomatis
 
-    printf("Nama alat: ");
+    printf("\n" CYAN BOLD "=========== TAMBAH ALAT ===========" RESET "\n");
+
+    printf("Nama alat       : ");
     safeGets(buf, sizeof(buf));
     strncpy(alat.name, buf, sizeof(alat.name) - 1); //copy ke struct
     alat.name[sizeof(alat.name) - 1] = '\0';
 
-    printf("Merek: ");
+    printf("Merek           : ");
     safeGets(buf, sizeof(buf));
     strncpy(alat.merek, buf, sizeof(alat.merek) - 1);
     alat.merek[sizeof(alat.merek) - 1] = '\0';
 
-    printf("Model: ");
+    printf("Model           : ");
     safeGets(buf, sizeof(buf));
     strncpy(alat.model, buf, sizeof(alat.model) - 1);
     alat.model[sizeof(alat.model) - 1] = '\0';
 
-    printf("Tahun: ");
+    printf("Tahun           : ");
     safeGets(buf, sizeof(buf));
     alat.productionYear = (uint32_t) atoi(buf); //konversi string ke angka
 
-    printf("Jumlah unit: ");
+    printf("Jumlah unit     : ");
     safeGets(buf, sizeof(buf));
     alat.quantity = (uint32_t) atoi(buf);
 
     if (addItem(&alat)) { //simpan alat
-        printf("Item berhasil ditambahkan. ID = %u\n", alat.idAlat);
+        printf(GREEN "[+] Item berhasil ditambahkan. ID = %u\n" RESET, alat.idAlat);
     } else {
-        printf("Gagal menambah item.\n");
+        printf(RED "Gagal menambah item.\n"RESET);
     }
 }
 //mengedit alat
 void adminEditItems() { //fungsi untuk edit alat
     char buf[64]; //buffer untuk menampung input sementara
+    printf("\n" CYAN BOLD "=========== EDIT ALAT ===========" RESET "\n");
     printf("Masukkan ID item yang ingin diedit: ");
     safeGets(buf, sizeof(buf));
     uint32_t id = (uint32_t)atoi(buf); //konversi ke angka
 
     Item *alat = findItemById(id); //cari item berdasarkan ID
     if (!alat) { 
-        printf("ID tidak ditemukan.\n");
+        printf(RED "[!] ID tidak ditemukan.\n" RESET);
         return;
     }
 
-    printf("Kosongkan input untuk tidak mengubah.\n");
+    printf(MAGENTA "Kosongkan input untuk tidak mengubah.\n" RESET);
 
     printf("Nama (%s): ", alat->name); //tampilkan nilai lama
     safeGets(buf, sizeof(buf)); //membaca input nama baru
@@ -102,44 +126,56 @@ void adminEditItems() { //fungsi untuk edit alat
     if (strlen(buf)) alat->quantity = (uint32_t)atoi(buf); //mengganti jumlah
 
     if (updateItem(alat)) //panggil fungsi untuk menyimpan perubahan item
-        printf("Item berhasil diupdate.\n");
+        printf(GREEN "[+] Item berhasil diupdate.\n" RESET);
     else 
-        printf("Gagal update item.\n");
+        printf(RED "[!] Gagal update item.\n" RESET);
 }
 
 //menghapus alat
 void adminDeleteItems() { //fungsi hapus alat
     char buf[64];
 
+    printf("\n" CYAN BOLD "=========== HAPUS ALAT ===========" RESET "\n");
     printf("Masukkan ID item yang ingin dihapus: "); 
     safeGets(buf, sizeof(buf));
 
     uint32_t id = (uint32_t)atoi(buf); //konversi ke angka
 
     if(deleteItem(id)) { //hapus alat
-        printf("Item dan peminjaman terkait dihapus.\n");
+        printf(GREEN "[+] Item dan peminjaman terkait dihapus.\n" RESET);
     } else {
-        printf("Hapus item gagal. ID tidak ditemukan.\n");
+        printf(GREEN "[!] Hapus item gagal. ID tidak ditemukan.\n" RESET);
     }
 }
 
 //menampilkan semua peminjaman
-void adminListLoans(){ //fungsi menampilkan semua peminjaman
-    loadLoans(); //muat data peminjaman
-    printf("=== Daftar semua peminjaman alat ===\n");
-    printf("============================================================\n");
-    printf("| %-15s | %-8s | %-8s | \n","Username","ID Alat", "jumlah\n");
-    printf("=============================================================\n");
+void adminListLoans() { // fungsi menampilkan semua peminjaman
+    loadLoans(); // muat data peminjaman
 
-    if (countLoan == 0){
-        printf("| Tidak ada data peminjaman.                            |\n");
-    }else{
-        for(int i = 0; i < countLoan; i++){ //loop tampilkan semua data
-            printf("| %-15s | %-8u | %-8u |\n", loans[i].username, loans[i].itemId, loans[i].quantity);
+    printf("\n" CYAN BOLD "=== Daftar semua peminjaman alat ===" RESET "\n");
+    printf(BLUE "=================================================================\n" RESET);
+
+    // Header tabel berwarna
+    printf(YELLOW BOLD "| %-15s | %-8s | %-8s |\n" RESET,
+           "Username", "ID Alat", "Jumlah");
+
+    printf(BLUE "=================================================================\n" RESET);
+
+    if (countLoan == 0) {
+        printf(RED "| %-61s |\n" RESET, "[!] Tidak ada data peminjaman.");
+    } else {
+        for (int i = 0; i < countLoan; i++) {
+            printf(WHITE BOLD "| %-15s | %-8u | %-8u |\n" RESET,
+                   loans[i].username,
+                   loans[i].itemId,
+                   loans[i].quantity);
         }
     }
-    printf("=================================================================\n");
+
+    printf(BLUE "=================================================================\n" RESET);
 }
+
+
 
 //membuat akun
 void adminCreateAccount() { //fungsi untuk membuat akun
@@ -181,15 +217,15 @@ void adminMenu(const char *username) { //fungsi untuk menu utama admin
     char choice[8]; 
 
     while (1) {
-        printf("\n=== MENU ADMIN (%s)===\n", username);
-        printf("1. Lihat daftar alat\n");
-        printf("2. Tambah alat\n");
-        printf("3. Edit alat\n");
-        printf("4. Hapus alat\n");
-        printf("5. Lihat semua peminjaman\n");
-        printf("6. Buat akun baru\n");
-        printf("7. Logout\n");
-        printf("Pilih: ");
+        printf("\n" CYAN BOLD "=========== MENU ADMIN (%s) ===========" RESET "\n", username);
+        printf(WHITE BOLD"1. Lihat daftar alat\n"RESET);
+        printf(WHITE BOLD"2. Tambah alat\n"RESET);
+        printf(WHITE BOLD"3. Edit alat\n"RESET);
+        printf(WHITE BOLD"4. Hapus alat\n"RESET);
+        printf(WHITE BOLD"5. Lihat semua peminjaman\n"RESET);
+        printf(WHITE BOLD"6. Buat akun baru\n"RESET);
+        printf(WHITE BOLD"7. Logout\n"RESET);
+        printf(WHITE BOLD"Pilih: "RESET);
 
         safeGets(choice, sizeof(choice)); //input pilihan menu
 
@@ -212,11 +248,11 @@ void adminMenu(const char *username) { //fungsi untuk menu utama admin
             adminCreateAccount();
         }
         else if (strcmp(choice, "7") == 0) {
-            printf("Logout\n");
+            printf(WHITE BOLD "GOOD BYE\n");
             break;
         }
         else {
-            printf("Pilihan tidak valid!\n");
+            printf(RED "[!] Pilihan tidak valid!\n" RESET);
         }
     }
 }

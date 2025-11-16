@@ -1,3 +1,13 @@
+#define RESET   "\033[0m"
+#define RED     "\033[31m"
+#define GREEN   "\033[32m"
+#define YELLOW  "\033[33m"
+#define BLUE    "\033[34m"
+#define MAGENTA "\033[35m"
+#define CYAN    "\033[36m"
+#define BOLD    "\033[1m"
+#define WHITE "\033[37m"
+
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -7,108 +17,118 @@
 #include "../utils/utils.h"
 
 void userListAvailable() {
-    printf("\n=== DAFTAR ALAT LAB YANG TERSEDIA ===\n");
+    printf("\n" CYAN BOLD "=== DAFTAR ALAT LAB YANG TERSEDIA ===" RESET "\n");
+
     bool found = false;
+
+    printf(YELLOW BOLD"+--------+----------------------+----------------------+----------------------+--------+--------+\n" RESET);
+    printf(YELLOW BOLD"| ID     | Nama                 | Merek                | Model                | Tahun  | Stok   |\n" RESET);
+    printf(YELLOW BOLD"+--------+----------------------+----------------------+----------------------+--------+--------+\n" RESET);
 
     for (int i = 0; i < countItem; i++) {
         if (items[i].quantity > 0) {
-            printf("%d | %s | %s | %s | %d | %d\n",
+
+            printf("| %-6d | %-20s | %-20s | %-20s | %-6d | %-6d |\n",
                 items[i].idAlat,
                 items[i].name,
                 items[i].merek,
                 items[i].model,
                 items[i].productionYear,
-                items[i].quantity);
+                items[i].quantity
+            );
+
             found = true;
         }
     }
 
-    if (found == false) {
-        printf("Tidak ada alat tersedia.\n");
-    }
+    printf(YELLOW "+--------+----------------------+----------------------+----------------------+--------+--------+\n" RESET);
 
+    if (!found) {
+        printf(RED "[!] Tidak ada alat tersedia.\n" RESET);
+    }
 }
+
 
 void userBorrow(const char *username) {
     char buf[64];
 
-    printf("Masukkan ID alat yang ingin dipinjam: ");
+    printf(CYAN "Masukkan ID alat yang ingin dipinjam: " RESET);
     safeGets(buf, sizeof(buf));
     uint32_t id = (uint32_t)atoi(buf);
 
     Item *alat = findItemById(id);
     if (alat == NULL) {
-        printf("ID tidak ditemukan.\n");
+        printf(RED "[!] ID tidak ditemukan.\n" RESET);
         return;
     }
 
-    printf("Jumlah tersedia: %u. Masukkan jumlah: ", alat->quantity);
+    printf("Jumlah tersedia: " GREEN "%u" RESET ". Masukkan jumlah: ", alat->quantity);
     safeGets(buf, sizeof(buf));
     uint32_t jumlahPinjam = (uint32_t)atoi(buf);
 
     if (jumlahPinjam == 0) {
-        printf("Jumlah harus > 0.\n");
+        printf(RED "[!] Jumlah harus > 0.\n" RESET);
         return;
     }
     if (jumlahPinjam > alat->quantity) {
-        printf("Stok tidak mencukupi.\n");
+        printf(RED "[!] Stok tidak mencukupi.\n" RESET);
         return;
     }
 
     if (!addOrUpdateLoans(username, id, jumlahPinjam)) {
-        printf("Gagal meminjam (kapasitas loans?).\n");
+        printf(RED "[!] Gagal meminjam (kapasitas penuh?).\n" RESET);
         return;
     }
 
     alat->quantity -= jumlahPinjam;
     saveItems();
 
-    printf("Berhasil meminjam %u unit '%s'.\n", jumlahPinjam, alat->name);
+    printf(GREEN "[+] Berhasil meminjam %u unit '%s'.\n" RESET, jumlahPinjam, alat->name);
 }
 
 void userListBorrowed(const char *username) {
     
-    printf("\n=== DAFTAR ALAT YANG ANDA PINJAM ===\n");
+    printf("\n" CYAN BOLD "=== DAFTAR ALAT YANG ANDA PINJAM ===" RESET "\n");
     int found = 0;
 
     for (int i = 0; i < countLoan; i++) {
         if (strcmp(loans[i].username, username) == 0) {
             Item *alat = findItemById(loans[i].itemId);
 
-            printf("%u | %s | Jumlah: %u\n",
-                loans[i].itemId,
-                alat ? alat->name : "(Item telah dihapus)",
-                loans[i].quantity);
+            printf(GREEN "%u" RESET " | " WHITE "%s" RESET " | Jumlah: " YELLOW "%u" RESET "\n",
+                   loans[i].itemId,
+                   alat ? alat->name : RED "(Item telah dihapus)" RESET,
+                   loans[i].quantity);
 
             found = 1;
         }
     }
 
     if (found == false) {
-        printf("Anda belum meminjam alat.\n");
+        printf(RED "[!] Anda belum meminjam alat.\n" RESET);
     }
 }
 
 void userReturn(const char *username) {
     char buf[64];
 
-    printf("Masukkan ID alat yang ingin dikembalikan: ");
+    printf(CYAN "Masukkan ID alat yang ingin dikembalikan: " RESET);
     safeGets(buf, sizeof(buf));
     uint32_t id = (uint32_t)atoi(buf);
 
     int itemIndex = findLoansIndex(username, id);
     if (itemIndex == -1) {
-        printf("Anda tidak meminjam alat dengan ID tersebut.\n");
+        printf(RED "[!] Anda tidak meminjam alat dengan ID tersebut.\n" RESET);
         return;
     }
 
-    printf("Anda meminjam %u unit. Masukkan jumlah yang dikembalikan: ",
+    printf("Anda meminjam " YELLOW "%u" RESET " unit. Masukkan jumlah yang dikembalikan: ",
            loans[itemIndex].quantity);
     safeGets(buf, sizeof(buf));
     uint32_t jumlahKembali = (uint32_t)atoi(buf);
 
     if (jumlahKembali == 0 || jumlahKembali > loans[itemIndex].quantity) {
-        printf("Jumlah tidak valid.\n");
+        printf(RED "[!] Jumlah tidak valid.\n" RESET);
         return;
     }
 
@@ -120,19 +140,20 @@ void userReturn(const char *username) {
 
     removeOrDecreaseLoan(username, id, jumlahKembali);
 
-    printf("Berhasil mengembalikan %u unit.\n", jumlahKembali);
+    printf(GREEN "[+] Berhasil mengembalikan %u unit.\n" RESET, jumlahKembali);
 }
 
 void userMenu(const char *username) {
     char choice[8];
     while (1) {
-        printf("\n=== MENU USER (%s) ===\n", username);
-        printf("1. Lihat alat tersedia\n");
-        printf("2. Pinjam alat\n");
-        printf("3. Lihat alat yang dipinjam\n");
-        printf("4. Kembalikan alat\n");
-        printf("5. Logout\n");
-        printf("Pilih: ");
+        printf("\n" MAGENTA BOLD "=========== MENU USER (%s) ===========" RESET "\n", username);
+        printf(GREEN "1." RESET " Lihat alat tersedia\n");
+        printf(GREEN "2." RESET " Pinjam alat\n");
+        printf(GREEN "3." RESET " Lihat alat yang dipinjam\n");
+        printf(GREEN "4." RESET " Kembalikan alat\n");
+        printf(GREEN "5." RESET " Logout\n");
+
+        printf(YELLOW "Pilih: " RESET);
         safeGets(choice, sizeof(choice));
 
         if (strcmp(choice, "1") == 0)
@@ -147,7 +168,7 @@ void userMenu(const char *username) {
             printf("Logout.\n");
             break;
         } else
-            printf("Pilihan tidak valid.\n");
+            printf(RED "[!] Pilihan tidak valid.\n" RESET);
     }
 }
 
