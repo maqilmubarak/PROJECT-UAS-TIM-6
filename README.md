@@ -148,3 +148,21 @@ sistempinjamalat/data/items.txt
 ```
 
 ---
+## 📦 3. Mode User – Peminjaman Alat
+
+**Folder:** `sistempinjamalat/user/`
+
+* `userfunction.c`
+* `userfunction.h`
+
+**Operasi user:**
+
+* 📦 Pinjam alat laboratorium
+* ↩️ Kembalikan alat
+* 📋 Lihat daftar peminjaman
+
+**Data transaksi peminjaman tersimpan di:**
+
+```
+sistempinjamalat/data/loan.txt
+```
