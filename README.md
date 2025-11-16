@@ -127,5 +127,24 @@ PROJECT-UAS-TIM-6
 ```
 sistempinjamalat/data/account.txt
 ```
+## 🛠 2. Mode Admin – CRUD Alat
+
+**Folder:** `sistempinjamalat/admin/`
+
+* `adminfunction.c`
+* `adminfunction.h`
+
+**Operasi admin:**
+
+* ➕ Tambah alat
+* ✏️ Edit alat
+* ❌ Hapus alat
+* 📋 Tampilkan item
+
+**Data item tersimpan di:**
+
+```
+sistempinjamalat/data/items.txt
+```
 
 ---
