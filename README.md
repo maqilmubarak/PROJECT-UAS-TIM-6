@@ -257,3 +257,18 @@ virzi 9090 user
 1 Keyboard Rexux ModelA 2019 5
 2 Mouse Logitech 5425 2020 3
 ```
+
+**Format:** `id nama_alat merek model tahun jumlah`
+
+---
+
+### `loan.txt`
+
+```
+salwa 1 Keyboard
+virzi 2 Mouse
+```
+
+**Format:** `username id_alat nama_alat`
+
+---
