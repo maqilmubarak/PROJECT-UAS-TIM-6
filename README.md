@@ -41,6 +41,27 @@ Program mencakup:
 * 🎵 BONUS: Program pembuat kosakata unik dari lirik lagu
 
 ---
+# 🎨 **Daftar Isi**
 
+* [Anggota Kelompok](#-anggota-kelompok)
+* [Struktur Direktori](#%EF%B8%8F-struktur-direktori)
+* [Penjelasan Sistem](#-penjelasan-program)
+* [Bonus Program Lirik](#-bonus-program--kosa-kata-lirik)
+* [Format File TXT](#-format-file)
+* [Cara Compile & Run](#️-cara-compile--run)
+* [Cara Clone Repo](#-clone-repo)
+* [Arsitektur Program](#-arsitektur-program)
+
+---
+
+# 👥 **Anggota Kelompok**
+
+| No | Nama                        | NPM             |
+| -- | --------------------------- | --------------- |
+| 1  | **Siti Salwa Shafina**      | 250810701100055 |
+| 2  | **Nayli Itqiyana**          | 250810701100025 |
+| 3  | **Virzi Mayhand Syahputra** | 250810701100077 |
+| 4  | **Muhammad Aqil Mubarak**   | 250810701100003 |
+| 5  | **Muhammad Khishal Ardana** | 250810701100070 |
 
 ---
