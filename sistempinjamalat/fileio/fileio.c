@@ -239,7 +239,7 @@ uint32_t nextItemId() {
 }
 
 void loadLoans(){
-    ountLoan = 0;
+    countLoan = 0;
     
     FILE* file = fopen(LOAN, "r");
     if (file == NULL){
