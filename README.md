@@ -459,3 +459,43 @@ Helper functions untuk input validation, string manipulation, error handling, da
 ```
 
 ---
+
+## 🎯 Design Principles
+
+1. **Modularitas**: Setiap modul punya tanggung jawab spesifik
+2. **Separation of Concerns**: Logic terpisah dari I/O
+3. **Reusability**: Fungsi utils dapat digunakan di mana saja
+4. **File-based Database**: Sederhana, mudah di-debug
+5. **ANSI C Standard**: Kompatibilitas maksimal
+6. **CLI-Based**: Ringan dan efisien
+
+---
+
+## 💡 Fitur Unggulan
+
+✅ **Command Line Arguments** - Login langsung tanpa prompt tambahan  
+✅ **Role-Based Access** - Admin dan User punya akses berbeda  
+✅ **File-based Storage** - Data persisten dalam format .txt  
+✅ **Modular Architecture** - Mudah dipelihara dan dikembangkan  
+✅ **Error Handling** - Validasi input dan penanganan error yang baik  
+✅ **Cross-platform** - Berjalan di Linux, macOS, dan Windows (dengan MinGW)  
+
+---
+
+<p align="center">
+Built with 💻💖 by <b>Tim 6</b> <br>
+<i>Lab Pemrograman Kelas A – FMIPA Universitas Syiah Kuala</i> <br>
+🤖⚙️
+</p>
+
+---
+
+## 📝 Lisensi
+
+Project ini dilisensikan di bawah MIT License - lihat file [LICENSE](LICENSE) untuk detail.
+
+---
+
+<p align="center">
+  <b>⭐ Star repo ini jika bermanfaat!</b>
+</p>
