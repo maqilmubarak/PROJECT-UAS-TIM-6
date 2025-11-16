@@ -5,26 +5,42 @@
 
 typedef struct {
     char kata[128][64];
-    int totalKarakter;
+    int totalKata;
 } Kosakata;
 
 void alphabetOnlyCoy(char *src, char *dest){
     int i = 0;
-    for(int j = 0; src[j] != "\0"; j++){
+    for(int j = 0; src[j] != '\0'; j++){
         if(isalpha(src[j]) || src[j] == '\''){
-            dest[i++] = word[i];     
+            dest[i++] = tolower(src[i]);     
         }
     }
-    dest[j] = '\0';
+    dest[i] = '\0';
 }
 
+int kataSudahDitemukan(Kosakata *listKata, char *kata){
+    for(int i = 0; i < listKata->totalKata; i++){
+        if(strcmp(listKata->kata[i], kata) == 0){
+            return 1;
+        }
+    }
+    return 0;
+}
+
+
 int main(){
+    Kosakata kata = {0};
+    char baris[128];
+    char kataAlphabetOnly[128];
+
     FILE *fptr = fopen("lirik.txt", "r");
 
     if(fptr == NULL){
         printf("[!] Tidak dapat membuka file lirik.txt\n");
         return EXIT_FAILURE;
     }
+
+
 
 
 
