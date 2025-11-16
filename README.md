@@ -372,3 +372,17 @@ Program ini dibangun dengan arsitektur modular berbasis C, dengan pemisahan tang
 ```
 
 ---
+## 🔄 Alur Kerja Program
+
+### 1️⃣ **Entry Point: main.c**
+- Menerima command line arguments (username & password)
+- Memanggil modul `login/` untuk validasi
+
+### 2️⃣ **Autentikasi: login/**
+- Membaca `data/account.txt` via `fileio/`
+- Validasi kredensial user
+- Menentukan role: `admin` atau `user`
+- Redirect ke menu yang sesuai
+
+### 3️⃣ **Menu Admin: admin/**
+**File:** `adminfunction.c` & `adminfunction.h`
