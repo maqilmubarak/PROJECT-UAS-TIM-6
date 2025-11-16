@@ -304,3 +304,71 @@ make
 ```
 
 ---
+## ▶️ **Jalankan sebagai Admin**
+
+```bash
+./peminjaman admin admin123
+```
+
+## ▶️ **Jalankan sebagai User**
+
+```bash
+./peminjaman salwa 12345
+```
+
+---
+
+# 🚀 **Clone Repo**
+
+```bash
+git clone https://github.com/maqilmubarak/PROJECT-UAS-TIM-6
+cd PROJECT-UAS-TIM-6
+```
+
+---
+
+# 🧭 **Arsitektur Program**
+
+## 📐 Struktur Modular
+
+Program ini dibangun dengan arsitektur modular berbasis C, dengan pemisahan tanggung jawab yang jelas:
+
+```
+                              main.c
+                                 │
+                    ┌────────────┴─────────────┐
+                    │                          │
+                    ▼                          ▼
+            ┌──────────────┐          ┌──────────────┐
+            │   login/     │          │   utils/     │
+            │  login.c/h   │          │  utils.c/h   │
+            └──────┬───────┘          └──────────────┘
+                   │                   (Helper Functions)
+                   │ (Autentikasi)
+                   │
+        ┏━━━━━━━━━┻━━━━━━━━━┓
+        ▼                    ▼
+   ┌─────────┐          ┌─────────┐
+   │  admin/ │          │  user/  │
+   │ CRUD    │          │ Pinjam  │
+   └────┬────┘          └────┬────┘
+        │                    │
+        └────────┬───────────┘
+                 ▼
+          ┌────────────┐
+          │  fileio/   │
+          │ fileio.c/h │
+          └──────┬─────┘
+                 │
+        ┌────────┼────────┐
+        ▼        ▼        ▼
+    ┌────────────────────────┐
+    │      data/             │
+    ├────────────────────────┤
+    │ • account.txt          │
+    │ • items.txt            │
+    │ • loan.txt             │
+    └────────────────────────┘
+```
+
+---
