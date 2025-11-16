@@ -20,6 +20,7 @@ void adminListItems(){ //fungsi untuk menampilkan semua alat
     printf("\n" CYAN BOLD "=========== DAFTAR ALAT ===========" RESET "\n");
     if(countItem == 0) {
         printf(RED "Alat belum tersedia.\n" RESET);
+        pauseAndClear();
         return;
    }
 
@@ -39,6 +40,7 @@ void adminListItems(){ //fungsi untuk menampilkan semua alat
         );
     }
     printf("+---------------------------------------------------------------------------------------+\n");
+    pauseAndClear();
 
 }
 
@@ -274,28 +276,36 @@ void adminMenu(const char *username) { //fungsi untuk menu utama admin
 
         safeGets(choice, sizeof(choice)); //input pilihan menu
 
-        if (strcmp(choice, "1") == 0) { 
+        if (strcmp(choice, "1") == 0) {
+            clearScreen(); 
             adminListItems();
         }
         else if (strcmp(choice, "2") == 0) {
+            clearScreen();
             adminAddItems();
         }
         else if (strcmp(choice, "3") == 0) {
+            clearScreen();
             adminEditItems();
         }
         else if (strcmp(choice, "4") == 0) {
+            clearScreen();
             adminDeleteItems();
         }
         else if (strcmp(choice, "5") == 0) {
+            clearScreen();
             adminListLoans();
         }
         else if (strcmp(choice, "6") == 0) {
+            clearScreen();
             adminCreateAccount();
         }
         else if (strcmp(choice, "7") == 0) {
+            clearScreen();
             adminSearchItems();
         }
         else if (strcmp(choice, "8") == 0) {
+            clearScreen();
             printf(WHITE BOLD "GOOD BYE\n");
             break;
         }

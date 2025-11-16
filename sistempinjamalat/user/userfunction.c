@@ -46,6 +46,7 @@ void userListAvailable() {
     if (!found) {
         printf(RED "[!] Tidak ada alat tersedia.\n" RESET);
     }
+    pauseAndClear();
 }
 
 void userSearchItems(const char *username) {
@@ -204,17 +205,28 @@ void userMenu(const char *username) {
         printf(YELLOW "Pilih: " RESET);
         safeGets(choice, sizeof(choice));
 
-        if (strcmp(choice, "1") == 0)
+        if (strcmp(choice, "1") == 0){   
+            clearScreen();
             userListAvailable();
-        else if (strcmp(choice, "2") == 0)
+        }
+        else if (strcmp(choice, "2") == 0){
+            clearScreen();
             userBorrow(username);
-        else if (strcmp(choice, "3") == 0)
+        }
+        else if (strcmp(choice, "3") == 0){
+            clearScreen();
             userListBorrowed(username);
-        else if (strcmp(choice, "4") == 0)
+        }
+        else if (strcmp(choice, "4") == 0){
+            clearScreen();
             userReturn(username);
-        else if (strcmp(choice, "5") == 0)
+        }
+        else if (strcmp(choice, "5") == 0){
+            clearScreen();
             userSearchItems(username);
+        }
         else if (strcmp(choice, "6") == 0) {
+            clearScreen();
             printf("Logout.\n");
             break;
         } else
