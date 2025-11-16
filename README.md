@@ -242,9 +242,9 @@ gcc main.c -o kosakata
 ### `account.txt`
 
 ```
-admin admin123 admin
-salwa 12345 user
-virzi 9090 user
+admin|admin123|admin
+salwa|12345|user
+virzi|9090|user
 ```
 
 **Format:** `username password role`
@@ -254,8 +254,8 @@ virzi 9090 user
 ### `items.txt`
 
 ```
-1 Keyboard Rexux ModelA 2019 5
-2 Mouse Logitech 5425 2020 3
+1 Keyboard|Rexux|Model|2019|5
+2 Mouse|Logitech|5425|2020|3
 ```
 
 **Format:** `id nama_alat merek model tahun jumlah`
