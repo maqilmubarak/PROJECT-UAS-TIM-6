@@ -5,30 +5,32 @@
 #include "../fileio/fileio.h"
 #include "../utils/utils.h"
 
-void adminListItems(){
+//menampilkan daftar alat
+void adminListItems(){ //fungsi untuk menampilkan semua alat
     printf("\nDAFTAR ALAT\n");
     if(countItem == 0) {
         printf("Alat belum tersedia.\n");
         return;
    }
 
-   printf("ID | NAMA | MERK | MODEL | TAHUN | JUMLAH\n");
-   for(int i = 0; i < countItem; i++) {
+   printf("ID | NAMA | MERK | MODEL | TAHUN | JUMLAH\n"); //header tabel
+   for(int i = 0; i < countItem; i++) { //loop untuk menampilkan seluruh item
     printf("%u | %s | %s | %s | %u | %u\n",
     items[i].idAlat, items[i].name, items[i].merek, items[i].model, items[i].productionYear, items[i].quantity);
 
    }
 }
 
-void adminAddItems() {
-    Item alat;
-    char buf[256];
+//menambahkan alat
+void adminAddItems() { //fungsi untuk menambah alat baru
+    Item alat; //struct untuk alat data baru
+    char buf[256]; //buffer input
 
-    alat.idAlat = nextItemId();
+    alat.idAlat = nextItemId(); //ambil id baru otomatis
 
     printf("Nama alat: ");
     safeGets(buf, sizeof(buf));
-    strncpy(alat.name, buf, sizeof(alat.name) - 1);
+    strncpy(alat.name, buf, sizeof(alat.name) - 1); //copy ke struct
     alat.name[sizeof(alat.name) - 1] = '\0';
 
     printf("Merek: ");
@@ -43,37 +45,37 @@ void adminAddItems() {
 
     printf("Tahun: ");
     safeGets(buf, sizeof(buf));
-    alat.productionYear = (uint32_t) atoi(buf);
+    alat.productionYear = (uint32_t) atoi(buf); //konversi string ke angka
 
     printf("Jumlah unit: ");
     safeGets(buf, sizeof(buf));
     alat.quantity = (uint32_t) atoi(buf);
 
-    if (addItem(&alat)) {
+    if (addItem(&alat)) { //simpan alat
         printf("Item berhasil ditambahkan. ID = %u\n", alat.idAlat);
     } else {
         printf("Gagal menambah item.\n");
     }
 }
-
-void adminEditItems() {
-    char buf[64];
+//mengedit alat
+void adminEditItems() { //fungsi untuk edit alat
+    char buf[64]; //buffer untuk menampung input sementara
     printf("Masukkan ID item yang ingin diedit: ");
     safeGets(buf, sizeof(buf));
-    uint32_t id = (uint32_t)atoi(buf);
+    uint32_t id = (uint32_t)atoi(buf); //konversi ke angka
 
-    Item *alat = findItemById(id);
-    if (!alat) {
+    Item *alat = findItemById(id); //cari item berdasarkan ID
+    if (!alat) { 
         printf("ID tidak ditemukan.\n");
         return;
     }
 
     printf("Kosongkan input untuk tidak mengubah.\n");
 
-    printf("Nama (%s): ", alat->name);
-    safeGets(buf, sizeof(buf));
-    if(strlen(buf)) {
-        strncpy(alat->name, buf, sizeof(alat->name)-1);
+    printf("Nama (%s): ", alat->name); //tampilkan nilai lama
+    safeGets(buf, sizeof(buf)); //membaca input nama baru
+    if(strlen(buf)) { //mengecek apakah user memasukkan sesuatu
+        strncpy(alat->name, buf, sizeof(alat->name)-1); //menyalin nama baru ke struktur item
         alat->name[sizeof(alat->name)-1] = '\0';
     }
 
@@ -93,35 +95,37 @@ void adminEditItems() {
 
     printf("Tahun (%u): ", alat->productionYear);
     safeGets(buf, sizeof(buf));
-    if (strlen(buf)) alat->productionYear = (uint32_t)atoi(buf);
+    if (strlen(buf)) alat->productionYear = (uint32_t)atoi(buf); //mengubah input menjadi angka jika tidak kosong
 
     printf("Jumlah (%u): ", alat->quantity);
     safeGets(buf, sizeof(buf));
-    if (strlen(buf)) alat->quantity = (uint32_t)atoi(buf);
+    if (strlen(buf)) alat->quantity = (uint32_t)atoi(buf); //mengganti jumlah
 
-    if (updateItem(alat)) 
+    if (updateItem(alat)) //panggil fungsi untuk menyimpan perubahan item
         printf("Item berhasil diupdate.\n");
     else 
         printf("Gagal update item.\n");
 }
 
-void adminDeleteItems() {
+//menghapus alat
+void adminDeleteItems() { //fungsi hapus alat
     char buf[64];
 
-    printf("Masukkan ID item yang ingin dihapus: ");
+    printf("Masukkan ID item yang ingin dihapus: "); 
     safeGets(buf, sizeof(buf));
 
-    uint32_t id = (uint32_t)atoi(buf);
+    uint32_t id = (uint32_t)atoi(buf); //konversi ke angka
 
-    if(deleteItem(id)) {
+    if(deleteItem(id)) { //hapus alat
         printf("Item dan peminjaman terkait dihapus.\n");
     } else {
         printf("Hapus item gagal. ID tidak ditemukan.\n");
     }
 }
 
-void adminListLoans(){
-    loadLoans();
+//menampilkan semua peminjaman
+void adminListLoans(){ //fungsi menampilkan semua peminjaman
+    loadLoans(); //muat data peminjaman
     printf("=== Daftar semua peminjaman alat ===\n");
     printf("============================================================\n");
     printf("| %-15s | %-8s | %-8s | \n","Username","ID Alat", "jumlah\n");
@@ -130,14 +134,15 @@ void adminListLoans(){
     if (countLoan == 0){
         printf("| Tidak ada data peminjaman.                            |\n");
     }else{
-        for(int i = 0; i < countLoan; i++){
+        for(int i = 0; i < countLoan; i++){ //loop tampilkan semua data
             printf("| %-15s | %-8u | %-8u |\n", loans[i].username, loans[i].itemId, loans[i].quantity);
         }
     }
     printf("=================================================================\n");
 }
 
-void adminCreateAccount() {
+//membuat akun
+void adminCreateAccount() { //fungsi untuk membuat akun
     char username[64], password[64], role[16];
 
     printf("Masukkan username baru: ");
@@ -148,7 +153,7 @@ void adminCreateAccount() {
         return;
     }
 
-    if(findAccount(username)) {
+    if(findAccount(username)) { //username tidak boleh duplikat
         printf("Username sudah ada.\n");
         return;
     }
@@ -159,20 +164,21 @@ void adminCreateAccount() {
     printf("Role (admin/user): ");
     safeGets(role, sizeof(role));
 
-    if (strcmp(role, "admin") != 0 && strcmp(role, "user") != 0) {
+    if (strcmp(role, "admin") != 0 && strcmp(role, "user") != 0) { //validasi role
         printf("Role tidak valid.\n");
         return;
     }
 
-    if (addAccount(username, password, role)) {
+    if (addAccount(username, password, role)) { //simpan akun
         printf("Akun dibuat.\n");
     } else {
         printf("Gagal membuat akun.\n");
     }
 }
 
-void adminMenu(const char *username) {
-    char choice[8];
+//menu pada admin
+void adminMenu(const char *username) { //fungsi untuk menu utama admin
+    char choice[8]; 
 
     while (1) {
         printf("\n=== MENU ADMIN (%s)===\n", username);
@@ -185,9 +191,9 @@ void adminMenu(const char *username) {
         printf("7. Logout\n");
         printf("Pilih: ");
 
-        safeGets(choice, sizeof(choice));
+        safeGets(choice, sizeof(choice)); //input pilihan menu
 
-        if (strcmp(choice, "1") == 0) {
+        if (strcmp(choice, "1") == 0) { 
             adminListItems();
         }
         else if (strcmp(choice, "2") == 0) {
