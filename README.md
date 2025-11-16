@@ -272,3 +272,35 @@ virzi 2 Mouse
 **Format:** `username id_alat nama_alat`
 
 ---
+
+# ▶️ **Cara Compile & Run**
+
+
+## 📝 Makefile
+
+```makefile
+CC = gcc
+CFLAGS = -Iadmin -Iuser -Ilogin -Ifileio -Iutils
+
+SRC = main.c \
+      admin/adminfunction.c \
+      user/userfunction.c \
+      login/login.c \
+      fileio/fileio.c \
+      utils/utils.c
+
+all:
+	$(CC) $(SRC) -o peminjaman $(CFLAGS)
+
+clean:
+	rm -f peminjaman
+```
+
+## 🔨 Compile Program
+
+```bash
+cd sistempinjamalat
+make
+```
+
+---
