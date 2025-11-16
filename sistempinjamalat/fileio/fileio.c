@@ -243,7 +243,7 @@ uint32_t nextItemId() {
     } 
     return max + 1;
 }
-
+// Memuat semua data peminjaman dari file LOAN (item.txt)
 void loadLoans(){
     countLoan = 0;
     
@@ -251,6 +251,7 @@ void loadLoans(){
     if (file == NULL){
         return;
     }
+    // Membaca baris demi baris dengan format: username itemId quantity
     while(fscanf(file, "%s %u %u",
                 loans[countLoan].username,
                 &loans[countLoan].itemId,
@@ -261,12 +262,14 @@ void loadLoans(){
      fclose(file);
 }
 
+// Menyimpan seluruh array loans[] ke dalam file LOAN
 void saveLoans(){
-    FILE *file = fopen(LOAN, "w");
+    FILE *file = fopen(LOAN, "w"); // buka file dalam mode tulis, overwrite
     if (file == NULL){
         printf("Error tidak dapat menyimpan file %s\n", LOAN);
         return;
     }
+     // Simpan seluruh data pinjaman ke file
     for (int i = 0; i < countLoan; i++){
         fprintf(file, "%s %u %u\n",
                 loans[i].username,
@@ -276,20 +279,25 @@ void saveLoans(){
     fclose(file);
 }
 
+// Mencari index pinjaman berdasarkan username dan itemId
 int findLoansIndex(const char *username, unsigned int itemId){
     for(int i = 0; i < countLoan; i++){
+        // Cek jika username cocok dan id alat cocok
         if(strcmp(loans[i].username, username) == 0 && loans[i].itemId == itemId){
-            return i;
+            return i; // ditemukan
         }
     }
-    return -1;
+    return -1; // tidak ditemukan
 } 
 
+// Menambahkan pinjaman baru atau update jumlah jika sudah ada
 int addOrUpdateLoans(const char *username, unsigned int itemId, unsigned int quantity){
-    loadLoans();
+    loadLoans();// refresh data
     int index = findLoansIndex(username, itemId);
+    // Jika sudah ada record pinjaman user dengan itemId yang sama → update quantity
     if (index >= 0){
         loans[index].quantity += quantity;
+    // Jika belum ada dan array belum penuh → buat record baru
     } else if (countLoan < MAX_LOANS){
         strncpy(loans[countLoan].username, username, sizeof(loans[0].username) - 1);
         loans[countLoan].username[sizeof(loans[0].username) - 1] = '\0';
@@ -300,29 +308,30 @@ int addOrUpdateLoans(const char *username, unsigned int itemId, unsigned int qua
         printf("Error: Data pinjaman penuh.\n");
     }
 
-    saveLoans();
+    saveLoans(); // simpan ke file
     return 1;
 }
-
+// Mengurangi atau menghapus pinjaman (untuk pengembalian alat)
 int removeOrDecreaseLoan(const char *username, uint32_t itemId, uint32_t quantity) {
-
+    // Cari index data pinjaman
     int index = findLoansIndex(username, itemId);
     if (index == -1) {
         printf("Loan tidak ditemukan!\n");
         return 0;
     }
-
+    // Tidak boleh mengembalikan lebih banyak dari yang dipinjam
     if (quantity > loans[index].quantity) {
         printf("Jumlah dikembalikan melebihi jumlah yang dipinjam!\n");
         return 0;
     }
-
+    // Jika jumlah yang dikembalikan sama → hapus record
     if (quantity == loans[index].quantity) {
         for (int i = index; i < countLoan - 1; i++) {
             loans[i] = loans[i + 1];
         }
         countLoan--;
     } 
+    // Jika masih tersisa → kurangi quantity saja
     else {
         loans[index].quantity -= quantity;
     }
