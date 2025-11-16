@@ -166,3 +166,44 @@ sistempinjamalat/data/items.txt
 ```
 sistempinjamalat/data/loan.txt
 ```
+
+---
+
+## 📁 4. Sistem I/O File
+
+**Folder:** `sistempinjamalat/fileio/`
+
+* `fileio.c`
+* `fileio.h`
+
+**Tugas:**
+
+* Membaca file account/item/loan
+* Menulis ulang file
+* Helper untuk menjaga konsistensi database
+
+**Fungsi utama:**
+- `loadAccounts()` → Baca `account.txt`
+- `loadItems()` → Baca `items.txt`
+- `loadLoans()` → Baca `loan.txt`
+- `saveItems()` → Tulis ke `items.txt`
+- `saveLoans()` → Tulis ke `loan.txt`
+
+---
+
+## 🔧 5. Utils
+
+**Folder:** `sistempinjamalat/utils/`
+
+* `utils.c`
+* `utils.h`
+
+**Berisi fungsi utilitas seperti:**
+
+* Validasi input
+* Konversi string
+* Pengecekan kesalahan
+* Text formatting pada CLI
+* Terminal control (clear screen, colors, etc.)
+
+---
