@@ -40,9 +40,18 @@ int main(){
         return EXIT_FAILURE;
     }
 
+    char *perKata = strtok(baris, " \n");
+    while(perKata != NULL){
+        alphabetOnlyCoy(perKata, kataAlphabetOnly);
 
+        if(strlen(kataAlphabetOnly) > 0 && kataSudahDitemukan(&kata, kataAlphabetOnly) == NULL){
+            strcpy(kata.kata[kata.totalKata], kataAlphabetOnly);
+            kata.totalKata++;
+        }
 
-
+        perKata = strtok(NULL, " \n");
+    }
+    fclose(fptr);
 
     return EXIT_SUCCESS;
 }
