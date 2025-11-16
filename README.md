@@ -386,3 +386,27 @@ Program ini dibangun dengan arsitektur modular berbasis C, dengan pemisahan tang
 
 ### 3️⃣ **Menu Admin: admin/**
 **File:** `adminfunction.c` & `adminfunction.h`
+
+---
+
+
+Operasi CRUD untuk alat laboratorium:
+- ➕ **Create**: Tambah alat baru
+- 📖 **Read**: Tampilkan daftar alat
+- ✏️ **Update**: Edit data alat
+- ❌ **Delete**: Hapus alat
+
+Data disimpan ke `data/items.txt` menggunakan `fileio/`
+
+### 4️⃣ **Menu User: user/**
+**File:** `userfunction.c` & `userfunction.h`
+
+Operasi peminjaman:
+- 📦 **Pinjam Alat**: Catat peminjaman ke `data/loan.txt`
+- ↩️ **Kembalikan Alat**: Hapus record dari `loan.txt`
+- 📋 **Lihat Peminjaman**: Tampilkan alat yang dipinjam
+
+### 5️⃣ **File I/O Handler: fileio/**
+**File:** `fileio.c` & `fileio.h`
+
+Mengelola semua operasi baca/tulis file untuk menjaga konsistensi data.
