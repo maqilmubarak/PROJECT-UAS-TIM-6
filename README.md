@@ -207,3 +207,53 @@ sistempinjamalat/data/loan.txt
 * Terminal control (clear screen, colors, etc.)
 
 ---
+
+# 🎵 **Bonus Program – Kosa Kata Lirik**
+
+**Lokasi:** `kosakatalirik/`
+
+Program terpisah yang membaca `lirik.txt` lalu menghasilkan:
+
+```
+kata=
+kata=
+kata=
+```
+
+**Aturan:**
+
+* Kata unik (tidak ada duplikasi)
+* Lowercase semua
+* Tanpa tanda baca (kecuali apostrof)
+* Urutan sesuai kemunculan pertama
+
+**Cara menjalankan:**
+
+```bash
+cd kosakatalirik
+gcc main.c -o kosakata
+./kosakata
+```
+
+---
+
+# 📄 **Format File**
+
+### `account.txt`
+
+```
+admin admin123 admin
+salwa 12345 user
+virzi 9090 user
+```
+
+**Format:** `username password role`
+
+---
+
+### `items.txt`
+
+```
+1 Keyboard Rexux ModelA 2019 5
+2 Mouse Logitech 5425 2020 3
+```
