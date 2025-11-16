@@ -12,7 +12,8 @@ void alphabetOnlyCoy(char *src, char *dest){
     int i = 0;
     for(int j = 0; src[j] != '\0'; j++){
         if(isalpha(src[j]) || src[j] == '\''){
-            dest[i++] = tolower(src[i]);     
+            dest[i] = tolower(src[i]);
+            i++;     
         }
     }
     dest[i] = '\0';
@@ -44,7 +45,7 @@ int main(){
     while(perKata != NULL){
         alphabetOnlyCoy(perKata, kataAlphabetOnly);
 
-        if(strlen(kataAlphabetOnly) > 0 && kataSudahDitemukan(&kata, kataAlphabetOnly) == NULL){
+        if(strlen(kataAlphabetOnly) > 0 && kataSudahDitemukan(&kata, kataAlphabetOnly) == 0){
             strcpy(kata.kata[kata.totalKata], kataAlphabetOnly);
             kata.totalKata++;
         }
@@ -52,6 +53,21 @@ int main(){
         perKata = strtok(NULL, " \n");
     }
     fclose(fptr);
+
+    FILE *out = fopen("kosa-kata.txt", "w");
+
+    if (out == NULL) {
+        printf("[!] Tidak dapat membuat file kosa-kata.txt\n");
+        return EXIT_FAILURE;
+    }
+
+    for (int i = 0; i < kata. totalKata; i++) {
+        fprintf(out, "%s=\n", kata.kata[i]);
+    }
+
+    fclose(out);
+
+    printf("[+] Berhasil! File kosa-kata.txt telah dibuat.\n");
 
     return EXIT_SUCCESS;
 }
